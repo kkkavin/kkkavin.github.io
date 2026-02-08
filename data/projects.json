@@ -1,0 +1,37 @@
+[
+    {
+        "title": "E-Commerce Dashboard",
+        "description": "A responsive admin dashboard for managing products and orders. Features real-time data visualization and dark mode support.",
+        "tech_stack": [
+            "React",
+            "Chart.js",
+            "Tailwind CSS",
+            "Firebase"
+        ],
+        "github_link": "https://github.com/username/ecommerce-dashboard",
+        "live_demo": "https://ecommerce-dashboard-demo.netlify.app"
+    },
+    {
+        "title": "Task Manager API",
+        "description": "A RESTful API for a task management application. Includes user authentication (JWT), task CRUD operations, and filtering.",
+        "tech_stack": [
+            "Node.js",
+            "Express",
+            "MongoDB",
+            "Jest"
+        ],
+        "github_link": "https://github.com/username/task-manager-api"
+    },
+    {
+        "title": "Weather App",
+        "description": "A weather application that fetches data from the OpenWeatherMap API. Displays current conditions and a 5-day forecast.",
+        "tech_stack": [
+            "JavaScript",
+            "HTML5",
+            "CSS3",
+            "Fetch API"
+        ],
+        "github_link": "https://github.com/username/weather-app",
+        "live_demo": "https://weather-app-demo.vercel.app"
+    }
+]
