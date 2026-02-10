@@ -13,7 +13,7 @@ export function initHero() {
     title.textContent = 'K K Kavin.';
 
     const tagline = document.createElement('h2');
-    tagline.textContent = 'I build things for the web.';
+    tagline.textContent = 'I learn by building real-world software projects';
 
     const description = document.createElement('p');
     description.textContent = "I’m a Computer Science & Design student who enjoys building web apps and games, learning new technologies, and solving problems through hands-on projects.";
