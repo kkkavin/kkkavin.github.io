@@ -12,7 +12,7 @@ export function initContact() {
     text.textContent = "I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!";
 
     const button = document.createElement('a');
-    button.href = 'mailto:email@example.com';
+    button.href = 'mailto:kavinkathiravan6787@gmail.com';
     button.className = 'theme-toggle'; // Reusing button style for now
     button.style.display = 'inline-block';
     button.style.marginTop = '1rem';
