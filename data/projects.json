@@ -30,8 +30,8 @@
         "title": "SpeedyBlitz – 2D Endless Runner Game",
         "description": "Built a productivity tracking system with both command-line and web interfaces to help students manage tasks, track progress, and store data persistently using a lightweight database.",
         "tech_stack": [
-            "JavaScript",
-            "HTML5",
+            "PyGame",
+            "Pygbag",
             "CSS3",
             "Fetch API"
         ],
