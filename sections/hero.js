@@ -16,7 +16,7 @@ export function initHero() {
     tagline.textContent = 'I build things for the web.';
 
     const description = document.createElement('p');
-    description.textContent = "I'm a software engineer specializing in building (and occasionally designing) exceptional digital experiences.";
+    description.textContent = "I’m a Computer Science & Design student who enjoys building web apps and games, learning new technologies, and solving problems through hands-on projects.";
 
     container.appendChild(subtitle);
     container.appendChild(title);
