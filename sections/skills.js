@@ -12,7 +12,7 @@ export function initSkills() {
     grid.className = 'grid';
     grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(150px, 1fr))';
 
-    const skills = ['Python', 'C', 'Java', 'HTML5 & CSS3', 'JavaScript', 'SQL', 'Unity', 'Blender', 'GitHub'];
+    const skills = ['Python', 'C', 'Java', 'HTML5 & CSS3', 'JavaScript', 'SQL', 'Unity', 'Blender', 'Git'];
 
     skills.forEach(skill => {
         const card = document.createElement('div');
