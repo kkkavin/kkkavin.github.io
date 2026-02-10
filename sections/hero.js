@@ -10,7 +10,7 @@ export function initHero() {
     subtitle.textContent = 'Hi, my name is';
 
     const title = document.createElement('h1');
-    title.textContent = 'User Name.';
+    title.textContent = 'K K Kavin.';
 
     const tagline = document.createElement('h2');
     tagline.textContent = 'I build things for the web.';
