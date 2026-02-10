@@ -20,7 +20,7 @@
         "tech_stack": [
             "Python",
             "SQLite3",
-            "MongoDB",
+            "VS Code",
             "Jest"
         ],
         "github_link": "https://github.com/username/task-manager-api"
