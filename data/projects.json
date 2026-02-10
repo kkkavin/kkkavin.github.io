@@ -28,7 +28,7 @@
     },
     {
         "title": "SpeedyBlitz – 2D Endless Runner Game",
-        "description": "A weather application that fetches data from the OpenWeatherMap API. Displays current conditions and a 5-day forecast.",
+        "description": "Built a productivity tracking system with both command-line and web interfaces to help students manage tasks, track progress, and store data persistently using a lightweight database.",
         "tech_stack": [
             "JavaScript",
             "HTML5",
