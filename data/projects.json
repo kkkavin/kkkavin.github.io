@@ -33,7 +33,8 @@
             "PyGame",
             "Pygbag",
             "Python",
-            ""
+            "VS Code",
+            "Py"
         ],
         "github_link": "https://github.com/username/weather-app",
         "live_demo": "https://weather-app-demo.vercel.app"
