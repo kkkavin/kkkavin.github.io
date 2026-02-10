@@ -16,7 +16,7 @@
     },
     {
         "title": "Student Productivity Tracker – Task & Study Management System",
-        "description": "A RESTful API for a task management application. Includes user authentication (JWT), task CRUD operations, and filtering.",
+        "description": "Built a productivity tracking system with both command-line and web interfaces to help students manage tasks, track progress, and store data persistently using a lightweight database.",
         "tech_stack": [
             "Node.js",
             "Express",
