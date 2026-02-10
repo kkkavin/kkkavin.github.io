@@ -3,7 +3,7 @@
         "title": "Online Vehicle Repair System (FixRide)",
         "description": "Developed a frontend app using HTML, CSS, and Javascript with a responsive UI Tools used: VS Code, Antigravity, GitHub Deployed using GitHub Pages",
         "tech_stack": [
-            "React",
+            "HTML5",
             "Chart.js",
             "Tailwind CSS",
             "Firebase"
