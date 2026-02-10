@@ -1,6 +1,6 @@
 [
     {
-        "title": "E-Commerce Dashboard",
+        "title": "Online Vehicle Repair System (FixRide)",
         "description": "A responsive admin dashboard for managing products and orders. Features real-time data visualization and dark mode support.",
         "tech_stack": [
             "React",
