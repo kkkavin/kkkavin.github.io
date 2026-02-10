@@ -27,7 +27,7 @@
         "github_link": "https://github.com/username/task-manager-api"
     },
     {
-        "title": "Weather App",
+        "title": "SpeedyBlitz – 2D Endless Runner Game",
         "description": "A weather application that fetches data from the OpenWeatherMap API. Displays current conditions and a 5-day forecast.",
         "tech_stack": [
             "JavaScript",
