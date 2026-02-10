@@ -32,8 +32,8 @@
         "tech_stack": [
             "PyGame",
             "Pygbag",
-            "CSS3",
-            "Fetch API"
+            "Python",
+            ""
         ],
         "github_link": "https://github.com/username/weather-app",
         "live_demo": "https://weather-app-demo.vercel.app"
