@@ -9,7 +9,7 @@ export function initAbout() {
     heading.textContent = 'About Me';
 
     const text = document.createElement('p');
-    text.textContent = 'Hello! My name is Kavin and I enjoy creating things that live on the internet. My interest in web development started back in 2012 when I decided to try editing custom Tumblr themes — turns out hacking together a custom reblog button taught me a lot about HTML & CSS!';
+    text.textContent = 'Hello! My name is Kavin and I 🎓B.E. CSD 3rd Year Student | Exploring Software Development, Python, AI | CS50x (ongoing) | Passionate about Learning & Building Projects | Open to Opportunities & New Directions🚀';
 
     container.appendChild(heading);
     container.appendChild(text);
