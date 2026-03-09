@@ -18,7 +18,8 @@
         "title": "AR Treasure Hunt – Mobile Augmented Reality Game",
         "description": "Developed an interactive augmented reality treasure hunt game with five progressive levels using Unity and Vuforia. Implemented marker-based AR object detection, level progression mechanics, and interactive UI systems. Built physics-based gameplay elements and optimized performance for Android mobile devices.",
         "tech_stack": [
-            "Python",
+            "Unity",
+            "Vuforia",
             "SQLite3",
             "VS Code",
             "GitHub",
