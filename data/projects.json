@@ -15,7 +15,7 @@
         "live_demo": "https://kkkavin.github.io/fix_ride"
     },
     {
-        "title": "Student Productivity Tracker – Task & Study Management System",
+        "title": "AR Treasure Hunt – Mobile Augmented Reality Game",
         "description": "Built a productivity tracking system with both command-line and web interfaces to help students manage tasks, track progress, and store data persistently using a lightweight database.",
         "tech_stack": [
             "Python",
