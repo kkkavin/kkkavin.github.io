@@ -16,7 +16,7 @@
     },
     {
         "title": "AR Treasure Hunt – Mobile Augmented Reality Game",
-        "description": "Built a productivity tracking system with both command-line and web interfaces to help students manage tasks, track progress, and store data persistently using a lightweight database.",
+        "description": "Developed an interactive augmented reality treasure hunt game with five progressive levels using Unity and Vuforia. Implemented marker-based AR object detection, level progression mechanics, and interactive UI systems. Built physics-based gameplay elements and optimized performance for Android mobile devices.",
         "tech_stack": [
             "Python",
             "SQLite3",
