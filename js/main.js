@@ -7,6 +7,7 @@
 import { initHero } from '../sections/hero.js';
 import { initAbout } from '../sections/about.js';
 import { initSkills } from '../sections/skills.js';
+import { initCertifications } from '../sections/certifications.js';
 import { initProjects } from '../sections/projects.js';
 import { initContact } from '../sections/contact.js';
 
@@ -77,6 +78,7 @@ async function initSections() {
     initHero();
     initAbout();
     initSkills();
+    initCertifications();
     await initProjects(); // Wait for data fetch
     initContact();
 }

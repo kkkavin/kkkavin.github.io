@@ -219,6 +219,19 @@ section {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.section-header h2 {
+    margin: 0;
+}
+
 .card {
     background: var(--bg-secondary);
     padding: var(--spacing-md);
@@ -244,4 +257,42 @@ footer {
     color: var(--text-secondary);
     font-size: var(--text-sm);
     border-top: 1px solid var(--border-color);
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 0.85rem 1.75rem;
+    background: var(--accent-color);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn:hover {
+    opacity: 0.95;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.btn:active {
+    transform: translateY(0) scale(0.99);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--accent-color);
+    border: 2px solid var(--accent-color);
+}
+
+.btn-outline:hover {
+    background: var(--accent-color);
+    color: var(--bg-primary);
 }
