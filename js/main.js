@@ -73,6 +73,40 @@ function initTheme() {
     observer.observe(root, { attributes: true });
 }
 
+function initMobileMenu() {
+    const toggleButton = document.getElementById('mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (!toggleButton || !navLinks) return;
+
+    const closeMenu = () => {
+        navLinks.classList.remove('open');
+        toggleButton.classList.remove('open');
+        document.body.classList.remove('lock-scroll');
+        toggleButton.setAttribute('aria-expanded', 'false');
+        toggleButton.setAttribute('aria-label', 'Open mobile menu');
+    };
+
+    toggleButton.addEventListener('click', () => {
+        const isOpen = !navLinks.classList.contains('open');
+        navLinks.classList.toggle('open', isOpen);
+        toggleButton.classList.toggle('open', isOpen);
+        document.body.classList.toggle('lock-scroll', isOpen);
+        toggleButton.setAttribute('aria-expanded', String(isOpen));
+        toggleButton.setAttribute('aria-label', isOpen ? 'Close mobile menu' : 'Open mobile menu');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!navLinks.classList.contains('open')) return;
+        if (event.target === toggleButton || navLinks.contains(event.target)) return;
+        closeMenu();
+    });
+}
+
 // 4. Section Management
 async function initSections() {
     initHero();
@@ -142,6 +176,7 @@ async function main() {
     console.log('Initializing portfolio...');
 
     initTheme();
+    initMobileMenu();
     await initSections();
     initThreeJS();
 
