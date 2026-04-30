@@ -87,7 +87,8 @@ function initMobileMenu() {
         toggleButton.setAttribute('aria-label', 'Open mobile menu');
     };
 
-    toggleButton.addEventListener('click', () => {
+    toggleButton.addEventListener('click', (event) => {
+        event.stopPropagation();
         const isOpen = !navLinks.classList.contains('open');
         navLinks.classList.toggle('open', isOpen);
         toggleButton.classList.toggle('open', isOpen);
@@ -102,7 +103,7 @@ function initMobileMenu() {
 
     document.addEventListener('click', (event) => {
         if (!navLinks.classList.contains('open')) return;
-        if (event.target === toggleButton || navLinks.contains(event.target)) return;
+        if (toggleButton.contains(event.target) || navLinks.contains(event.target)) return;
         closeMenu();
     });
 }
