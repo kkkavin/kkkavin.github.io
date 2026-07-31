@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="K K Kavin — Software Engineer at the intersection of full-stack development, immersive XR, and AI. I learn by building real-world software projects.">
+  <title>K K Kavin — Software Engineer | Full-Stack · XR · AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script>
+    (function () {
+      try {
+        var themes = ['dark', 'light', 'sunset'];
+        var stored = localStorage.getItem('theme');
+        var theme = themes.indexOf(stored) !== -1
+          ? stored
+          : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+
+  <div class="cursor-pointer" aria-hidden="true"></div>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="bg" aria-hidden="true">
+    <div class="code-grid"></div>
+    <div class="code-glyphs">
+      <div class="code-glyph glyph-lg g-cyan">def</div>
+      <div class="code-glyph glyph-md g-magenta">class</div>
+      <div class="code-glyph glyph-sm g-blue">import</div>
+      <div class="code-glyph glyph-md g-lime is-blur">return</div>
+      <div class="code-glyph glyph-sm g-violet">lambda</div>
+      <div class="code-glyph glyph-lg g-magenta is-blur">self</div>
+      <div class="code-glyph glyph-sm g-cyan">Vector3</div>
+      <div class="code-glyph glyph-md g-lime">GameObject</div>
+      <div class="code-glyph glyph-sm g-violet is-blur">Transform</div>
+      <div class="code-glyph glyph-lg g-blue">Update()</div>
+      <div class="code-glyph glyph-sm g-cyan is-blur">Quaternion</div>
+      <div class="code-glyph glyph-md g-magenta">Rigidbody</div>
+      <div class="code-glyph glyph-sm g-lime">Scene</div>
+      <div class="code-glyph glyph-md g-blue is-blur">Collider</div>
+    </div>
+    <div class="orb-layer">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="orb orb-4"></div>
+      <div class="orb orb-5"></div>
+    </div>
+    <div class="pane-layer">
+      <div class="pane pane-1"></div>
+      <div class="pane pane-2"></div>
+      <div class="pane pane-3"></div>
+      <div class="pane pane-4"></div>
+    </div>
+    <div class="vignette"></div>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="nav-logo" href="#hero" aria-label="Back to top">
+      <span class="nav-logo-badge">KK</span>
+      <span class="nav-logo-text">K K Kavin</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#journey">Journey</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch theme" aria-pressed="false">
+      <span class="theme-icon icon-moon">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </span>
+      <span class="theme-icon icon-sun">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </span>
+      <span class="theme-icon icon-spark">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c.5 4.5 2.5 6.5 7 7-4.5.5-6.5 2.5-7 7-.5-4.5-2.5-6.5-7-7 4.5-.5 6.5-2.5 7-7z"/><path d="M19 15c.2 2 1.2 3 3 3.2-1.8.2-2.8 1.2-3 3.2-.2-2-1.2-3-3-3.2 1.8-.2 2.8-1.2 3-3.2z"/></svg>
+      </span>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav class="mobile-links" aria-label="Mobile">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#journey">Journey</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="mobile-socials">
+      <a href="https://github.com/kkkavin" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.14 0 .3.2.66.8.55A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/kkkavin" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+      </a>
+      <a href="https://kkkavin.github.io/" target="_blank" rel="noopener" aria-label="Portfolio">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm7.44 7.5h-2.3A18.9 18.9 0 0 0 15.4 2.6 10.1 10.1 0 0 1 19.44 7.5zM12 2.04c1.02 1.06 2.6 3.04 3.2 5.46H8.8c.6-2.42 2.18-4.4 3.2-5.46zM4.6 2.6a18.9 18.9 0 0 0-1.04 4.9h-2.3A10.1 10.1 0 0 1 4.6 2.6zM1.26 9.5h2.6c-.07.8-.12 1.63-.12 2.5s.05 1.7.12 2.5h-2.6a10.3 10.3 0 0 1 0-5zM3.56 15.5h2.3c.23 1.74.58 3.42 1.04 4.9a10.1 10.1 0 0 1-3.34-4.9zM12 21.96c-1.02-1.06-2.6-3.04-3.2-5.46h6.4c-.6 2.42-2.18 4.4-3.2 5.46zM14.5 14.5h-5A10.5 10.5 0 0 1 12 6.6c2.4 2.06 3.3 5.25 2.5 7.9zm1.9 5.9c.46-1.48.8-3.16 1.04-4.9h2.3a10.1 10.1 0 0 1-3.34 4.9zm1.66-6.9c.07-.8.12-1.63.12-2.5s-.05-1.7-.12-2.5h2.6a10.3 10.3 0 0 1 0 5h-2.6z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <main>
+
+    <section id="hero" class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow reveal">Hello, I'm</p>
+        <h1 class="hero-name reveal d-1">K K <span class="gradient-text">Kavin</span></h1>
+        <p class="hero-role reveal d-2">
+          <span id="typed"></span><span class="caret" aria-hidden="true"></span>
+        </p>
+        <p class="hero-tag reveal d-3">I learn by building real-world software projects — from web apps to AR/VR worlds, at the intersection of full-stack development, immersive XR, and AI.</p>
+        <code class="hero-code reveal d-4" aria-label="K K Kavin, Software Engineer">
+          <span class="hero-code-line">
+            <span class="prompt">&gt;&gt;&gt;</span>
+            <span class="c-var">kavin</span> <span class="c-op">=</span> <span class="c-cls">SoftwareEngineer</span><span class="c-op">()</span>
+          </span>
+          <span class="hero-code-line">
+            <span class="prompt">&gt;&gt;&gt;</span>
+            <span class="c-op">#</span> <span class="c-str">Full-Stack · XR · AI</span>
+          </span>
+        </code>
+        <div class="hero-actions reveal d-4">
+          <a class="btn btn-primary magnetic" href="#projects">View My Work
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+          <a class="btn btn-ghost magnetic" href="https://drive.google.com/file/d/1iWASL0Tm0nn4R1Yq72klLUqScmeS2fIC/view?usp=sharing" target="_blank" rel="noopener">View Resume</a>
+        </div>
+        <div class="hero-socials reveal d-5">
+          <a href="https://github.com/kkkavin" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.14 0 .3.2.66.8.55A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/kkkavin" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+          <a href="https://kkkavin.github.io/" target="_blank" rel="noopener" aria-label="Portfolio">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm7.44 7.5h-2.3A18.9 18.9 0 0 0 15.4 2.6 10.1 10.1 0 0 1 19.44 7.5zM12 2.04c1.02 1.06 2.6 3.04 3.2 5.46H8.8c.6-2.42 2.18-4.4 3.2-5.46zM4.6 2.6a18.9 18.9 0 0 0-1.04 4.9h-2.3A10.1 10.1 0 0 1 4.6 2.6zM1.26 9.5h2.6c-.07.8-.12 1.63-.12 2.5s.05 1.7.12 2.5h-2.6a10.3 10.3 0 0 1 0-5zM3.56 15.5h2.3c.23 1.74.58 3.42 1.04 4.9a10.1 10.1 0 0 1-3.34-4.9zM12 21.96c-1.02-1.06-2.6-3.04-3.2-5.46h6.4c-.6 2.42-2.18 4.4-3.2 5.46zM14.5 14.5h-5A10.5 10.5 0 0 1 12 6.6c2.4 2.06 3.3 5.25 2.5 7.9zm1.9 5.9c.46-1.48.8-3.16 1.04-4.9h2.3a10.1 10.1 0 0 1-3.34 4.9zm1.66-6.9c.07-.8.12-1.63.12-2.5s-.05-1.7-.12-2.5h2.6a10.3 10.3 0 0 1 0 5h-2.6z"/></svg>
+          </a>
+          <span class="social-divider" aria-hidden="true"></span>
+          <a href="mailto:kavinkathiravan6787@gmail.com" aria-label="Email me">kavinkathiravan6787@gmail.com</a>
+        </div>
+        <div class="availability reveal d-5">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          Open to opportunities
+        </div>
+      </div>
+      <a class="scroll-cue" href="#about" aria-label="Scroll to about section">
+        <span class="scroll-cue-label">Scroll</span>
+        <span class="scroll-cue-line" aria-hidden="true"></span>
+      </a>
+    </section>
+
+    <section id="about" class="section">
+      <div class="sec-head">
+        <span class="eyebrow">01 · About</span>
+        <h2 class="split">Turning ideas into <span class="gradient-text">software</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-card glass reveal d-1">
+          <div class="portrait">
+            <span class="portrait-glyph">KK</span>
+            <div class="portrait-ring" aria-hidden="true"></div>
+          </div>
+          <div class="about-meta">
+            <p class="meta-name">K K Kavin</p>
+            <p class="meta-role">Software Engineer · Full-Stack · XR · AI</p>
+            <p class="meta-loc">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Chennai, Tamil Nadu, India
+            </p>
+          </div>
+        </div>
+        <div class="about-bio glass reveal-blur d-2">
+          <p>I'm a Computer Science &amp; Design undergraduate at Sona College of Technology who learns by building real-world software — from responsive web apps to AR/VR worlds and AI-powered tools. My approach has always been simple: build consistently, understand deeply, and improve with every project.</p>
+          <p>I enjoy the full arc of software — structuring clean frontends, wiring up Python backends and databases, and stepping into Unity to craft immersive XR experiences. When I'm not pushing commits, you'll find me chasing a 1000+ day Duolingo streak, training calisthenics, or competing in CTF and coding events.</p>
+          <div class="about-stats">
+            <div class="stat">
+              <span class="stat-num gradient-text" data-count="5" data-suffix="+">5+</span>
+              <span class="stat-label">Languages</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num gradient-text" data-count="5" data-suffix="">5</span>
+              <span class="stat-label">Flagship builds</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num gradient-text" data-count="1000" data-suffix="+">1000+</span>
+              <span class="stat-label">Day streak</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="sec-head">
+        <span class="eyebrow">02 · Skills</span>
+        <h2 class="split">My <span class="gradient-text">toolbox</span></h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card glass reveal d-1">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 5l-2 14"/></svg>
+            </div>
+            <h3>Languages</h3>
+          </div>
+          <ul class="skill-chips">
+            <li>Python</li>
+            <li>C</li>
+            <li>C#</li>
+            <li>Java</li>
+            <li>JavaScript</li>
+            <li>SQL</li>
+          </ul>
+          <div class="skill-bar">
+            <div class="bar-head"><span>Python</span><span>90%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="90"></div></div>
+          </div>
+          <div class="skill-bar">
+            <div class="bar-head"><span>C# / Unity</span><span>85%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="85"></div></div>
+          </div>
+          <div class="skill-bar">
+            <div class="bar-head"><span>JavaScript</span><span>80%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="80"></div></div>
+          </div>
+        </div>
+        <div class="skill-card glass reveal d-2">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M9 8v8M15 8v8M9 12h6"/></svg>
+            </div>
+            <h3>Web &amp; Backend</h3>
+          </div>
+          <ul class="skill-chips">
+            <li>HTML5 &amp; CSS3</li>
+            <li>JavaScript</li>
+            <li>Django</li>
+            <li>React</li>
+            <li>SQLite3</li>
+            <li>MySQL</li>
+          </ul>
+          <div class="skill-bar">
+            <div class="bar-head"><span>Django / React</span><span>80%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="80"></div></div>
+          </div>
+          <div class="skill-bar">
+            <div class="bar-head"><span>Databases</span><span>85%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="85"></div></div>
+          </div>
+        </div>
+        <div class="skill-card glass reveal d-3">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 20l4-16M5 8l-3 4 3 4M19 8l3 4-3 4"/></svg>
+            </div>
+            <h3>XR &amp; Game Dev</h3>
+          </div>
+          <ul class="skill-chips">
+            <li>Unity</li>
+            <li>AR / VR</li>
+            <li>Blender</li>
+            <li>Vuforia</li>
+            <li>OpenXR</li>
+            <li>PyGame</li>
+          </ul>
+          <div class="skill-bar">
+            <div class="bar-head"><span>Unity / XR</span><span>85%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="85"></div></div>
+          </div>
+          <div class="skill-bar">
+            <div class="bar-head"><span>Git &amp; GitHub</span><span>90%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="90"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="skills-note glass reveal d-4">
+        <span class="eyebrow">Core strengths</span>
+        <p>Problem Solving · Critical Thinking · Quick Learner</p>
+      </div>
+    </section>
+
+    <section id="projects" class="pin-section">
+      <div class="pin-sticky">
+        <div class="projects-track">
+          <div class="projects-panel projects-lead">
+            <div class="sec-head">
+              <span class="eyebrow">03 · Projects</span>
+              <h2 class="split">Selected <span class="gradient-text">work</span></h2>
+            </div>
+            <p class="projects-lead-text">A few things I've built recently — a horizontal wander through my favourite builds, from AI-powered study tools to immersive XR worlds.</p>
+            <div class="projects-count"><span class="count-now">01</span><span class="count-total"> / 05</span></div>
+          </div>
+          <article class="p-card glass">
+            <a class="p-thumb thumb-1" href="https://github.com/kkkavin/study-sync" aria-label="Study Sync project" target="_blank" rel="noopener">
+              <span class="thumb-glyph">SS</span>
+              <span class="thumb-shine" aria-hidden="true"></span>
+              <span class="thumb-link" aria-hidden="true">Open ↗</span>
+            </a>
+            <div class="p-body">
+              <h3>Study Sync</h3>
+              <p>A RAG-powered study assistant that ingests your PDFs, retrieves what matters, and answers with context — spanning a Python desktop app and a React web app.</p>
+              <div class="p-tags"><span>Python</span><span>LangChain</span><span>ChromaDB</span><span>React</span></div>
+            </div>
+          </article>
+          <article class="p-card glass">
+            <a class="p-thumb thumb-2" href="https://github.com/kkkavin/portfolio-builder" aria-label="Portfolio Builder project" target="_blank" rel="noopener">
+              <span class="thumb-glyph">PB</span>
+              <span class="thumb-shine" aria-hidden="true"></span>
+              <span class="thumb-link" aria-hidden="true">Open ↗</span>
+            </a>
+            <div class="p-body">
+              <h3>Portfolio Builder</h3>
+              <p>A React + TypeScript app that turns your details into a polished, animated portfolio you can export as a ready-to-deploy ZIP.</p>
+              <div class="p-tags"><span>React</span><span>TypeScript</span><span>Tailwind</span><span>GSAP</span></div>
+            </div>
+          </article>
+          <article class="p-card glass">
+            <a class="p-thumb thumb-3" href="https://github.com/kkkavin/fix_ride" aria-label="FixRide project" target="_blank" rel="noopener">
+              <span class="thumb-glyph">FR</span>
+              <span class="thumb-shine" aria-hidden="true"></span>
+              <span class="thumb-link" aria-hidden="true">Open ↗</span>
+            </a>
+            <div class="p-body">
+              <h3>FixRide</h3>
+              <p>A responsive web app for browsing vehicle repair services and initiating service requests — focused on clean UI and a smooth deployment workflow.</p>
+              <div class="p-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>GitHub Pages</span></div>
+            </div>
+          </article>
+          <article class="p-card glass">
+            <a class="p-thumb thumb-4" href="https://github.com/kkkavin/meta-well" aria-label="MetaWell project" target="_blank" rel="noopener">
+              <span class="thumb-glyph">MW</span>
+              <span class="thumb-shine" aria-hidden="true"></span>
+              <span class="thumb-link" aria-hidden="true">Open ↗</span>
+            </a>
+            <div class="p-body">
+              <h3>MetaWell</h3>
+              <p>A VR mental wellness platform for Meta Quest 3 — interactive 3D rooms, a beach relaxation scene, and an AI therapist companion with real-time voice.</p>
+              <div class="p-tags"><span>Unity</span><span>C#</span><span>OpenXR</span><span>ConvAI</span></div>
+            </div>
+          </article>
+          <article class="p-card glass">
+            <a class="p-thumb thumb-5" href="https://github.com/kkkavin/ar_treasure_hunt" aria-label="AR Treasure Hunt project" target="_blank" rel="noopener">
+              <span class="thumb-glyph">AR</span>
+              <span class="thumb-shine" aria-hidden="true"></span>
+              <span class="thumb-link" aria-hidden="true">Open ↗</span>
+            </a>
+            <div class="p-body">
+              <h3>AR Treasure Hunt</h3>
+              <p>An interactive mobile AR game with five progressive levels — marker tracking, object placement, and immersive gameplay built with Unity and Vuforia.</p>
+              <div class="p-tags"><span>Unity</span><span>C#</span><span>Vuforia</span><span>Android SDK</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="journey" class="section">
+      <div class="sec-head">
+        <span class="eyebrow">04 · Journey</span>
+        <h2 class="split">My <span class="gradient-text">education</span> so far</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-progress" aria-hidden="true"></div>
+        <div class="tl-item reveal d-1">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-card glass">
+            <span class="tl-period">2023 — 2027</span>
+            <h3>B.E. Computer Science and Design</h3>
+            <p class="tl-org">Sona College of Technology · 77.6%</p>
+            <p>Building a strong foundation in programming, data structures, web technologies, and design — where XR, AI, and full-stack ambitions started taking shape.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal d-2">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-card glass">
+            <span class="tl-period">2022 — 2023</span>
+            <h3>Higher Secondary (HSE)</h3>
+            <p class="tl-org">Kendriya Vidyalaya · 81.6%</p>
+            <p>Science stream — where late-night problem sets and first lines of code turned into a lifelong love for software.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal d-3">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <div class="tl-card glass">
+            <span class="tl-period">2020 — 2021</span>
+            <h3>Secondary School (SSLC)</h3>
+            <p class="tl-org">Kendriya Vidyalaya · 85.6%</p>
+            <p>The starting point — curiosity, discipline, and a growing interest in how computers and games work.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications" class="section">
+      <div class="sec-head">
+        <span class="eyebrow">05 · Certifications</span>
+        <h2 class="split">Credentials &amp; <span class="gradient-text">learning</span></h2>
+      </div>
+      <div class="cert-grid">
+        <a class="cert-card glass reveal d-1" href="https://drive.google.com/file/d/1toilhYasVHKy03EvwZtBo61xNWOsEVEy/view?usp=drive_link" target="_blank" rel="noopener">
+          <span class="cert-name">Python Foundation Certification</span>
+          <span class="cert-org">Infosys Springboard</span>
+        </a>
+        <a class="cert-card glass reveal d-1" href="https://drive.google.com/file/d/1S4GfdoR3qoasm7xLPo4AvltVWFmOWhbF/view?usp=drive_link" target="_blank" rel="noopener">
+          <span class="cert-name">Programming, Data Structures &amp; Algorithms Using Python</span>
+          <span class="cert-org">NPTEL</span>
+        </a>
+        <a class="cert-card glass reveal d-2" href="https://drive.google.com/file/d/1V0xU4pFsssRvVRtMBnmJDvEVFKvIXm22/view?usp=drive_link" target="_blank" rel="noopener">
+          <span class="cert-name">Design Thinking – A Primer</span>
+          <span class="cert-org">NPTEL</span>
+        </a>
+        <a class="cert-card glass reveal d-2" href="https://drive.google.com/file/d/1wQPPqXt4eEnF3PrrEbUlNGwEcRRMAcVo/view?usp=drive_link" target="_blank" rel="noopener">
+          <span class="cert-name">Mobile AR Development</span>
+          <span class="cert-org">Unity</span>
+        </a>
+        <a class="cert-card glass reveal d-3" href="https://drive.google.com/file/d/1ya3TkOuhzs-sQwX1sYGOXdwKyQIP5q3w/view?usp=drive_link" target="_blank" rel="noopener">
+          <span class="cert-name">VR Development</span>
+          <span class="cert-org">Unity</span>
+        </a>
+        <a class="cert-card glass reveal d-3" href="https://drive.google.com/file/d/1d_D7Vha3jhwH3XuSUIG1LA4Ykxp6VM1K/view?usp=sharing" target="_blank" rel="noopener">
+          <span class="cert-name">Digital 101 – 30 Hours</span>
+          <span class="cert-org">NASSCOM</span>
+        </a>
+        <a class="cert-card glass reveal d-1" href="https://drive.google.com/file/d/16UiZPW2ck4iCqRP8CPCCZb0EEh1H0Qpn/view?usp=sharing" target="_blank" rel="noopener">
+          <span class="cert-name">Cybersecurity Fundamentals</span>
+          <span class="cert-org">Infosys Springboard</span>
+        </a>
+        <a class="cert-card glass reveal d-2" href="https://drive.google.com/file/d/1vmQpW8Yt9IxPyleIPHr2uzfQnrZmoEA_/view?usp=sharing" target="_blank" rel="noopener">
+          <span class="cert-name">Data Processing &amp; Visualization</span>
+          <span class="cert-org">Infosys Springboard</span>
+        </a>
+        <div class="cert-card glass reveal d-3">
+          <span class="cert-name">Full-Stack Development with AI Tools</span>
+          <span class="cert-org">EY &amp; Edunet Foundation</span>
+        </div>
+        <div class="cert-card glass reveal d-3">
+          <span class="cert-name">AI Skills Passport</span>
+          <span class="cert-org">EY &amp; Edunet Foundation</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="achievements" class="section">
+      <div class="sec-head">
+        <span class="eyebrow">06 · Achievements</span>
+        <h2 class="split">Beyond the <span class="gradient-text">code</span></h2>
+      </div>
+      <div class="ach-grid">
+        <div class="ach-item glass reveal d-1">
+          <span class="ach-emoji" aria-hidden="true">🇯🇵</span>
+          <h3>1000+ Day Japanese Streak</h3>
+          <p>Learning Japanese on Duolingo every single day — N5 certified.</p>
+        </div>
+        <div class="ach-item glass reveal d-2">
+          <span class="ach-emoji" aria-hidden="true">🏆</span>
+          <h3>1st Position — BYTE</h3>
+          <p>Bring Your Tech Excellence, Sona Programming Club.</p>
+        </div>
+        <div class="ach-item glass reveal d-3">
+          <span class="ach-emoji" aria-hidden="true">🛡️</span>
+          <h3>2nd Position — CTF</h3>
+          <p>Capture The Flag at Sparks'25.</p>
+        </div>
+        <div class="ach-item glass reveal d-4">
+          <span class="ach-emoji" aria-hidden="true">💪</span>
+          <h3>Athletics &amp; Calisthenics</h3>
+          <p>Competitive athlete, regularly training calisthenics.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="sec-head">
+        <span class="eyebrow">07 · Contact</span>
+        <h2 class="split">Let's build something <span class="gradient-text">great</span></h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info glass reveal d-1">
+          <h3>Have an idea or an opportunity? I'd love to hear it.</h3>
+          <p>I'm currently looking for new opportunities — whether it's a project, a collaboration, or just a hello, my inbox is always open.</p>
+          <a class="contact-mail" href="mailto:kavinkathiravan6787@gmail.com">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+            kavinkathiravan6787@gmail.com
+          </a>
+          <a class="contact-mail" href="tel:+919159189895">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +91 91591 89895
+          </a>
+          <p class="contact-loc">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Chennai, Tamil Nadu, India
+          </p>
+          <div class="contact-socials">
+            <a href="https://github.com/kkkavin" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.14 0 .3.2.66.8.55A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+            </a>
+            <a href="https://linkedin.com/in/kkkavin" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://kkkavin.github.io/" target="_blank" rel="noopener" aria-label="Portfolio">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm7.44 7.5h-2.3A18.9 18.9 0 0 0 15.4 2.6 10.1 10.1 0 0 1 19.44 7.5zM12 2.04c1.02 1.06 2.6 3.04 3.2 5.46H8.8c.6-2.42 2.18-4.4 3.2-5.46zM4.6 2.6a18.9 18.9 0 0 0-1.04 4.9h-2.3A10.1 10.1 0 0 1 4.6 2.6zM1.26 9.5h2.6c-.07.8-.12 1.63-.12 2.5s.05 1.7.12 2.5h-2.6a10.3 10.3 0 0 1 0-5zM3.56 15.5h2.3c.23 1.74.58 3.42 1.04 4.9a10.1 10.1 0 0 1-3.34-4.9zM12 21.96c-1.02-1.06-2.6-3.04-3.2-5.46h6.4c-.6 2.42-2.18 4.4-3.2 5.46zM14.5 14.5h-5A10.5 10.5 0 0 1 12 6.6c2.4 2.06 3.3 5.25 2.5 7.9zm1.9 5.9c.46-1.48.8-3.16 1.04-4.9h2.3a10.1 10.1 0 0 1-3.34 4.9zm1.66-6.9c.07-.8.12-1.63.12-2.5s-.05-1.7-.12-2.5h2.6a10.3 10.3 0 0 1 0 5h-2.6z"/></svg>
+            </a>
+          </div>
+        </div>
+        <form class="contact-form glass reveal-blur d-2" id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Doe" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="email">Your email</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="message">Your message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project…" required></textarea>
+          </div>
+          <button class="btn btn-primary btn-block magnetic" type="submit">Send Message
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+          <p class="form-success" id="formSuccess" role="status" aria-live="polite">Message sent! I'll get back to you soon.</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <a class="footer-logo" href="#hero">K K Kavin</a>
+      <p>© 2026 K K Kavin. Crafted with glass &amp; code — Python, Unity &amp; a little bit of magic.</p>
+      <a class="back-top magnetic" href="#hero" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <script src="js/lenis.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
