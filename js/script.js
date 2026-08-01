@@ -511,6 +511,65 @@
         el.addEventListener('mouseenter', function () { ring.classList.add('is-active'); });
         el.addEventListener('mouseleave', function () { ring.classList.remove('is-active'); });
       });
+
+      var boltPath = 'M12 1 L6 13 H11 L10 23 L17 10 H12.5 Z';
+      var boltFlights = [
+        { rot: 180, tx: 0, ty: -46 },
+        { rot: 135, tx: -33, ty: -33 },
+        { rot: 90, tx: -46, ty: 0 }
+      ];
+      var sparkAngles = [0, 50, 105, 155, 205, 260, 310];
+      var themeCount = { dark: 6, light: 5, sunset: 8 };
+
+      function angleOffset(index) {
+        return (index % 2 === 0 ? 7 : -7) * (index + 1);
+      }
+
+      document.addEventListener('mousedown', function (e) {
+        var theme = htmlEl.getAttribute('data-theme') || 'dark';
+        var count = themeCount[theme] || 6;
+        var spark = document.createElement('span');
+        spark.className = 'click-spark';
+        spark.style.left = e.clientX + 'px';
+        spark.style.top = e.clientY + 'px';
+
+        var flash = document.createElement('span');
+        flash.className = 'flash';
+        spark.appendChild(flash);
+
+        var i = 0;
+        while (i < boltFlights.length) {
+          var b = document.createElement('span');
+          b.className = 'bolt';
+          b.style.setProperty('--bolt-tx', boltFlights[i].tx + 'px');
+          b.style.setProperty('--bolt-ty', boltFlights[i].ty + 'px');
+          b.style.setProperty('--bolt-rot', boltFlights[i].rot + 'deg');
+          b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + boltPath + '"></path></svg>';
+          spark.appendChild(b);
+          i += 1;
+        }
+
+        i = 0;
+        while (i < count) {
+          var p = document.createElement('span');
+          p.className = 'particle';
+          var base = sparkAngles[i % sparkAngles.length] + angleOffset(i);
+          var rad = base * Math.PI / 180;
+          var dist = 34 + (i % 3) * 12;
+          p.style.setProperty('--spark-tx', Math.cos(rad) * dist + 'px');
+          p.style.setProperty('--spark-ty', Math.sin(rad) * dist + 'px');
+          p.style.setProperty('--spark-delay', ((i % 3) * 0.03) + 's');
+          spark.appendChild(p);
+          i += 1;
+        }
+
+        var pending = spark.querySelectorAll('.flash, .bolt, .particle').length;
+        spark.addEventListener('animationend', function () {
+          pending -= 1;
+          if (pending <= 0) spark.remove();
+        });
+        document.body.appendChild(spark);
+      });
     }
   }
 

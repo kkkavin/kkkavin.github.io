@@ -695,8 +695,109 @@ html.custom-cursor textarea {
 }
 
 @media (hover: none), (pointer: coarse) {
-  .cursor-ring, .cursor-dot, .cursor-pointer { display: none; }
+  .cursor-ring, .cursor-dot, .cursor-pointer, .click-spark { display: none; }
 }
+
+/* ===== Click lightning spark ===== */
+
+.click-spark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 9995;
+  will-change: transform;
+}
+
+.click-spark .flash {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(circle, var(--spark-flash) 0%, color-mix(in srgb, var(--spark-flash) 35%, transparent) 45%, transparent 70%);
+  animation: spark-flash 0.5s var(--ease) forwards;
+}
+
+.click-spark .bolt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 26px;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 6px var(--spark-bolt)) drop-shadow(0 0 14px color-mix(in srgb, var(--spark-bolt) 55%, transparent));
+  animation: spark-bolt 0.72s linear forwards;
+}
+
+.click-spark .bolt svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.click-spark .bolt path {
+  fill: var(--spark-bolt);
+}
+
+.click-spark .particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: var(--spark-particle);
+  box-shadow: 0 0 5px color-mix(in srgb, var(--spark-particle) 65%, transparent);
+  animation: spark-particle 0.55s var(--ease) forwards;
+  animation-delay: var(--spark-delay);
+}
+
+@keyframes spark-flash {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.95; }
+  60% { opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(3.4); opacity: 0; }
+}
+
+@keyframes spark-bolt {
+  0% { transform: translate(-50%, -50%) translate(0, 0) scale(0.85) rotate(var(--bolt-rot, -8deg)); opacity: 0; }
+  4% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translate(-50%, -50%) translate(var(--bolt-tx, 0px), var(--bolt-ty, 0px)) scale(1) rotate(var(--bolt-rot, -8deg)); opacity: 0; }
+}
+
+@keyframes spark-particle {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--spark-tx), var(--spark-ty)) scale(0.15); opacity: 0; }
+}
+
+[data-theme="dark"] {
+  --spark-bolt: #22d3ee;
+  --spark-flash: #22d3ee;
+  --spark-particle: #e879f9;
+}
+
+[data-theme="light"] {
+  --spark-bolt: #2563eb;
+  --spark-flash: #ffffff;
+  --spark-particle: #7c3aed;
+}
+
+[data-theme="sunset"] {
+  --spark-bolt: #ffb347;
+  --spark-flash: #ff6b4a;
+  --spark-particle: #ff6b4a;
+}
+
+[data-theme="dark"] .click-spark .bolt { filter: drop-shadow(0 0 6px #22d3ee) drop-shadow(0 0 16px rgba(34, 211, 238, 0.6)); }
+[data-theme="dark"] .click-spark .flash { animation-duration: 0.55s; }
+[data-theme="light"] .click-spark .bolt { filter: none; width: 20px; height: 24px; animation-duration: 0.58s; }
+[data-theme="light"] .click-spark .flash { animation-duration: 0.4s; }
+[data-theme="sunset"] .click-spark .flash { animation-duration: 0.65s; }
+[data-theme="sunset"] .click-spark .particle { box-shadow: 0 0 8px rgba(255, 107, 74, 0.8); }
 
 /* ===== Navigation ===== */
 
