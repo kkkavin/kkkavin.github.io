@@ -347,6 +347,12 @@ button {
   z-index: -1;
   overflow: hidden;
   will-change: transform;
+}
+
+.bg::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
   background: linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
 }
 
@@ -416,7 +422,7 @@ button {
 
 .vignette {
   position: absolute;
-  inset: 0;
+  inset: -15%;
   background: var(--vignette);
 }
 
