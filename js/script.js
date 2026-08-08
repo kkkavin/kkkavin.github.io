@@ -86,26 +86,21 @@
   var trackDistance = 0;
   var countNow = document.querySelector('.count-now');
 
-  var bg = document.querySelector('.bg');
   var orbLayer = document.querySelector('.orb-layer');
-  var paneLayer = document.querySelector('.pane-layer');
   var glyphLayer = document.querySelector('.code-glyphs');
-  var bgX = 0;
-  var bgY = 0;
-  var bgCurX = 0;
-  var bgCurY = 0;
+  var gridLayer = document.querySelector('.code-grid');
   var mouseTX = 0;
   var mouseTY = 0;
   var scrollTY = 0;
   var bgRaf = null;
   var layerTargets = [
     { el: orbLayer, factor: 1.5 },
-    { el: paneLayer, factor: 0.6 },
-    { el: glyphLayer, factor: 2.2 }
+    { el: glyphLayer, factor: 2.2 },
+    { el: gridLayer, factor: 0.6 }
   ];
   var layerPos = {};
   layerTargets.forEach(function (layer) {
-    layerPos[layer.el] = { x: 0, y: 0, tx: 0, ty: 0 };
+    layerPos[layer.el] = { x: 0, y: 0 };
   });
 
   function onScroll() {
@@ -128,10 +123,8 @@
 
     if (heroInner && !reduceMotion) {
       if (y < vh * 1.15) {
-        heroInner.style.transform = 'translateY(' + (y * 0.28) + 'px)';
         heroInner.style.opacity = String(1 - y / (vh * 1.05));
       } else {
-        heroInner.style.transform = '';
         heroInner.style.opacity = '';
       }
     }
@@ -147,10 +140,9 @@
     }
 
     updateGallery();
-    updateCerts();
 
-    if (bg && !reduceMotion) {
-      scrollTY = -y * 0.045;
+    if (orbLayer && !reduceMotion) {
+      scrollTY = -Math.min(y * 0.035, window.innerHeight * 0.3);
       if (!bgRaf) bgRaf = window.requestAnimationFrame(bgLoop);
     }
   }
@@ -158,21 +150,20 @@
   function bgLoop() {
     var targetX = mouseTX;
     var targetY = mouseTY + scrollTY;
-    bgCurX += (targetX - bgCurX) * 0.1;
-    bgCurY += (targetY - bgCurY) * 0.1;
-    bg.style.transform = 'translate(' + bgCurX.toFixed(2) + 'px, ' + bgCurY.toFixed(2) + 'px)';
+    var moving = false;
 
     layerTargets.forEach(function (layer) {
       var pos = layerPos[layer.el];
-      var tx = mouseTX * layer.factor;
-      var ty = mouseTY * layer.factor;
+      var tx = targetX * layer.factor;
+      var ty = targetY * layer.factor;
       pos.x += (tx - pos.x) * 0.1;
       pos.y += (ty - pos.y) * 0.1;
-      layer.el.style.transform = 'translate(' + pos.x.toFixed(2) + 'px, ' + pos.y.toFixed(2) + 'px)';
+      layer.el.style.transform = 'translate3d(' + pos.x.toFixed(2) + 'px, ' + pos.y.toFixed(2) + 'px, 0)';
+      if (Math.abs(tx - pos.x) > 0.05 || Math.abs(ty - pos.y) > 0.05) moving = true;
     });
 
     bgRaf = null;
-    if (Math.abs(targetX - bgCurX) > 0.05 || Math.abs(targetY - bgCurY) > 0.05) {
+    if (moving) {
       bgRaf = window.requestAnimationFrame(bgLoop);
     }
   }
@@ -183,6 +174,192 @@
       mouseTY = (e.clientY / window.innerHeight - 0.5) * 36;
       if (!bgRaf) bgRaf = window.requestAnimationFrame(bgLoop);
     }, { passive: true });
+  }
+
+  /* ===== Ambient code words ===== */
+
+  var codeWords = [
+    'React', 'Node.js', 'TypeScript', 'GraphQL', 'PostgreSQL', 'Redis',
+    'Docker', 'Kubernetes', 'REST APIs', 'WebSockets', 'Next.js', 'Express',
+    'Prisma', 'Microservices', 'CI/CD', 'Nginx', 'MongoDB', 'Serverless',
+    'Monorepo', 'gRPC',
+    'Unity', 'Unreal', 'WebXR', 'ARKit', 'ARCore', 'OpenXR', 'HoloLens',
+    'Three.js', 'Babylon.js', 'Metaverse', 'Spatial Computing', 'Mixed Reality',
+    'Immersive UX', 'Raycasting', 'SLAM', 'Point Clouds', 'Virtual Worlds',
+    'PyTorch', 'TensorFlow', 'LLMs', 'Transformers', 'Neural Nets', 'GenAI',
+    'RAG', 'LangChain', 'Fine-tuning', 'Diffusion', 'CNN', 'GAN', 'NLP',
+    'Computer Vision', 'Vector DB', 'Embeddings', 'Prompt Engineering',
+    'MLOps', 'AI Agents', 'AutoML'
+  ];
+
+  var glyphSizes = ['glyph-sm', 'glyph-md'];
+  var glyphColors = ['g-cyan', 'g-magenta', 'g-blue', 'g-lime', 'g-violet'];
+  var recentWords = [];
+
+  function randBetween(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  function pickFrom(arr, avoid) {
+    var next = arr[(Math.random() * arr.length) | 0];
+    return next === avoid ? pickFrom(arr, avoid) : next;
+  }
+
+  function pickWord() {
+    var candidates = codeWords.filter(function (w) {
+      return recentWords.indexOf(w) === -1;
+    });
+    if (!candidates.length) candidates = codeWords.slice();
+    var word = pickFrom(candidates);
+    recentWords.push(word);
+    if (recentWords.length > 14) recentWords.shift();
+    return word;
+  }
+
+  function glyphPx(word, sizeClass) {
+    var size = sizeClass === 'glyph-md' ? 16.8 : 12.8;
+    return { w: word.length * size * 0.62, h: size * 1.4 };
+  }
+
+  function overlaps(a, b) {
+    return a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
+  }
+
+  function glyphCells(vw, vh) {
+    var nav = 76;
+    var heroRect = visibleHeroRect();
+    if (!heroRect) heroRect = { l: vw * 0.18, t: vh * 0.14, r: vw * 0.82, b: vh * 0.86 };
+
+    var inset = 36;
+    var gap = 76;
+    var top0 = nav + 12;
+    var top1 = heroRect.t - 70;
+    var bot0 = heroRect.b + 70;
+    var bot1 = vh - 16;
+    var cells = [];
+
+    function addBand(top, bottom, count) {
+      if (bottom - top < 60) return;
+      var i;
+      for (i = 0; i < count; i++) {
+        var x0 = (vw / count) * i + gap / 2;
+        var x1 = (vw / count) * (i + 1) - gap / 2;
+        if (x1 - x0 < 130) return;
+        cells.push({ x: [x0 + inset, x1 - inset], y: [top + 14, bottom - 14] });
+      }
+    }
+
+    addBand(top0, top1, 3);
+    addBand(bot0, bot1, 3);
+
+    if (vw > 960) {
+      if (heroRect.l > 170) cells.push({ x: [14 + inset, heroRect.l - 70 - inset], y: [heroRect.t + 90, heroRect.b - 90] });
+      if (vw - heroRect.r > 170) cells.push({ x: [heroRect.r + 70 + inset, vw - 14 - inset], y: [heroRect.t + 90, heroRect.b - 90] });
+    }
+
+    if (!cells.length) {
+      cells = [
+        { x: [18, vw * 0.28], y: [nav + 12, nav + 56] },
+        { x: [vw * 0.72, vw - 18], y: [nav + 12, nav + 56] },
+        { x: [18, vw * 0.28], y: [vh - 60, vh - 22] },
+        { x: [vw * 0.72, vw - 18], y: [vh - 60, vh - 22] }
+      ];
+    }
+    return cells;
+  }
+
+  function visibleHeroRect() {
+    if (!heroInner) return null;
+    var rect = heroInner.getBoundingClientRect();
+    var vh = window.innerHeight;
+    if (rect.bottom < -60 || rect.top > vh + 60) return null;
+    return { l: rect.left, t: rect.top, r: rect.right, b: rect.bottom };
+  }
+
+  var glyphEls = [];
+  var glyphBoxes = [];
+
+  function placeInCell(word, sizeClass, cell, usedBoxes) {
+    var size = glyphPx(word, sizeClass);
+    var heroRect = visibleHeroRect();
+    var sRect = scrollCue ? scrollCue.getBoundingClientRect() : null;
+    var scrollRect = sRect ? { l: sRect.left, t: sRect.top, r: sRect.right, b: sRect.bottom } : null;
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+    var cellCenter = (cell.x[0] + cell.x[1]) / 2;
+    for (var attempt = 0; attempt < 24; attempt++) {
+      var leftPx = randBetween(cell.x[0], cell.x[1]);
+      var topPx = randBetween(cell.y[0], cell.y[1]);
+      var anchor = cellCenter < vw * 0.46 ? 'right'
+        : cellCenter > vw * 0.54 ? 'left'
+        : (Math.random() < 0.5 ? 'left' : 'right');
+      var box = anchor === 'left'
+        ? { l: leftPx - 48, t: topPx - 48, r: leftPx + size.w + 48, b: topPx + size.h + 48 }
+        : { l: leftPx - size.w - 48, t: topPx - 48, r: leftPx + 48, b: topPx + size.h + 48 };
+      if (box.l < 0 || box.t < 0 || box.r > vw || box.b > vh) continue;
+      if (heroRect && overlaps(box, heroRect)) continue;
+      if (scrollRect && overlaps(box, scrollRect)) continue;
+      var clash = usedBoxes.some(function (u) { return overlaps(box, u); });
+      if (clash) continue;
+      return { leftPx: leftPx, topPx: topPx, anchor: anchor, box: box };
+    }
+    return { leftPx: (cell.x[0] + cell.x[1]) / 2, topPx: (cell.y[0] + cell.y[1]) / 2, anchor: 'left', box: { l: 0, t: 0, r: 0, b: 0 } };
+  }
+
+  function respawnGlyph(el, initial, cell) {
+    var word = pickWord();
+    el.dataset.word = word;
+    el.textContent = word;
+
+    var sizeClass = pickFrom(glyphSizes);
+    var cls = 'code-glyph ' + sizeClass + ' ' + pickFrom(glyphColors);
+    if (Math.random() < 0.3) cls += ' is-blur';
+    el.className = cls;
+
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+    var idx = glyphEls.indexOf(el);
+    var used = [];
+    var k;
+    for (k = 0; k < glyphBoxes.length; k++) {
+      if (k !== idx && glyphBoxes[k]) used.push(glyphBoxes[k]);
+    }
+    var spot = placeInCell(word, sizeClass, cell, used);
+    glyphBoxes[idx] = spot.box;
+
+    el.style.top = ((spot.topPx / vh) * 100) + '%';
+    if (spot.anchor === 'left') {
+      el.style.left = ((spot.leftPx / vw) * 100) + '%';
+      el.style.right = '';
+    } else {
+      el.style.right = (((vw - spot.leftPx) / vw) * 100) + '%';
+      el.style.left = '';
+    }
+
+    var duration = randBetween(18, 30);
+    var delay = initial ? -Math.random() * duration : 0;
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = 'glyphCycle ' + duration.toFixed(1) + 's ease-in-out ' + delay.toFixed(1) + 's forwards';
+  }
+
+  if (glyphLayer && !reduceMotion) {
+    var cells = glyphCells(window.innerWidth, window.innerHeight);
+    var glyphCount = Math.min(cells.length, window.innerWidth > 960 ? 7 : 5);
+    var i;
+    for (i = 0; i < glyphCount; i++) {
+      (function (cell) {
+        var g = document.createElement('div');
+        g.className = 'code-glyph';
+        glyphLayer.appendChild(g);
+        glyphEls.push(g);
+        glyphBoxes.push(null);
+        respawnGlyph(g, true, cell);
+        g.addEventListener('animationend', function () {
+          respawnGlyph(g, false, cell);
+        });
+      })(cells[i]);
+    }
   }
 
   /* ===== Tab visibility: pause ambient animations ===== */
@@ -221,33 +398,6 @@
 
   computeGallery();
 
-  /* ===== Cert scatter & drift ===== */
-
-  var certSection = document.getElementById('certifications');
-  var certCards = [];
-
-  if (certSection && !reduceMotion) {
-    certCards = Array.prototype.slice.call(certSection.querySelectorAll('.cert-card'));
-    certCards.forEach(function (card) {
-      card.style.setProperty('--cert-rot', (Math.random() * 8 - 4).toFixed(2) + 'deg');
-      card.style.setProperty('--cert-drift', (Math.random() * 24 - 12).toFixed(1) + 'px');
-      card.style.setProperty('--float-dur', (4 + Math.random() * 3).toFixed(2) + 's');
-    });
-  }
-
-  function updateCerts() {
-    if (!certSection || !certCards.length) return;
-    var rect = certSection.getBoundingClientRect();
-    var vh = window.innerHeight;
-    var p = clamp((vh * 0.55 - rect.top) / rect.height, -0.5, 1.5);
-    var factor = clamp(Math.abs(p - 0.5) * 3.2, 0, 1);
-    certCards.forEach(function (card) {
-      var rot = parseFloat(card.style.getPropertyValue('--cert-rot')) || 0;
-      var drift = parseFloat(card.style.getPropertyValue('--cert-drift')) || 0;
-      card.style.transform = 'translateY(' + (drift * factor).toFixed(2) + 'px) rotate(' + (rot * factor).toFixed(2) + 'deg)';
-    });
-  }
-
   /* ===== Pause ambient animations off-screen ===== */
 
   if (!reduceMotion && 'IntersectionObserver' in window) {
@@ -257,7 +407,7 @@
       });
     }, { rootMargin: '250px 0px' });
 
-    document.querySelectorAll('.cert-card, .portrait-ring').forEach(function (el) {
+    document.querySelectorAll('.portrait-ring').forEach(function (el) {
       idleObserver.observe(el);
     });
   }
