@@ -16,7 +16,7 @@
   var lenis = null;
 
   if (typeof window.Lenis === 'function' && !reduceMotion) {
-    lenis = new window.Lenis({ lerp: 0.09, smoothWheel: true, wheelMultiplier: 1 });
+    lenis = new window.Lenis({ lerp: 0.12, smoothWheel: true, wheelMultiplier: 1 });
     function lenisRaf(time) {
       lenis.raf(time);
       window.requestAnimationFrame(lenisRaf);
@@ -185,6 +185,12 @@
     }, { passive: true });
   }
 
+  /* ===== Tab visibility: pause ambient animations ===== */
+
+  document.addEventListener('visibilitychange', function () {
+    htmlEl.classList.toggle('tab-hidden', document.hidden);
+  });
+
   /* ===== Horizontal projects gallery ===== */
 
   function computeGallery() {
@@ -239,6 +245,20 @@
       var rot = parseFloat(card.style.getPropertyValue('--cert-rot')) || 0;
       var drift = parseFloat(card.style.getPropertyValue('--cert-drift')) || 0;
       card.style.transform = 'translateY(' + (drift * factor).toFixed(2) + 'px) rotate(' + (rot * factor).toFixed(2) + 'deg)';
+    });
+  }
+
+  /* ===== Pause ambient animations off-screen ===== */
+
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var idleObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        entry.target.style.animationPlayState = entry.isIntersecting ? '' : 'paused';
+      });
+    }, { rootMargin: '250px 0px' });
+
+    document.querySelectorAll('.cert-card, .portrait-ring').forEach(function (el) {
+      idleObserver.observe(el);
     });
   }
 
@@ -477,6 +497,8 @@
       var dotX = -100;
       var dotY = -100;
       var ringRaf = null;
+      var ringScale = 1;
+      var ringTarget = 1;
       var pointerOffX = 8.4;
       var pointerOffY = 1.85;
 
@@ -491,25 +513,26 @@
       }, { passive: true });
 
       function ringLoop() {
-        ringX += (mouseX - ringX) * 0.08;
-        ringY += (mouseY - ringY) * 0.08;
-        ring.style.transform = 'translate(' + (ringX - 18) + 'px, ' + (ringY - 18) + 'px)';
+        ringX += (mouseX - ringX) * 0.12;
+        ringY += (mouseY - ringY) * 0.12;
+        ringScale += (ringTarget - ringScale) * 0.2;
+        ring.style.transform = 'translate(' + (ringX - 18) + 'px, ' + (ringY - 18) + 'px) scale(' + ringScale.toFixed(3) + ')';
         if (dot) {
-          dotX += (mouseX - dotX) * 0.22;
-          dotY += (mouseY - dotY) * 0.22;
+          dotX += (mouseX - dotX) * 0.3;
+          dotY += (mouseY - dotY) * 0.3;
           dot.style.transform = 'translate(' + (dotX - 3) + 'px, ' + (dotY - 3) + 'px)';
         }
         ringRaf = null;
         var dotDx = dot ? Math.abs(mouseX - dotX) : 0;
         var dotDy = dot ? Math.abs(mouseY - dotY) : 0;
-        if (Math.abs(mouseX - ringX) > 0.5 || Math.abs(mouseY - ringY) > 0.5 || dotDx > 0.5 || dotDy > 0.5) {
+        if (Math.abs(mouseX - ringX) > 0.5 || Math.abs(mouseY - ringY) > 0.5 || dotDx > 0.5 || dotDy > 0.5 || Math.abs(ringTarget - ringScale) > 0.01) {
           ringRaf = window.requestAnimationFrame(ringLoop);
         }
       }
 
       document.querySelectorAll('a, button, .btn, input, textarea, .p-card').forEach(function (el) {
-        el.addEventListener('mouseenter', function () { ring.classList.add('is-active'); });
-        el.addEventListener('mouseleave', function () { ring.classList.remove('is-active'); });
+        el.addEventListener('mouseenter', function () { ring.classList.add('is-active'); ringTarget = 1.56; });
+        el.addEventListener('mouseleave', function () { ring.classList.remove('is-active'); ringTarget = 1; });
       });
 
       var boltPath = 'M12 1 L6 13 H11 L10 23 L17 10 H12.5 Z';

@@ -229,7 +229,6 @@ body {
   font-weight: 300;
   color: var(--cream);
   background: linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
-  background-attachment: fixed;
   line-height: 1.7;
   overflow-x: hidden;
   scrollbar-width: none;
@@ -286,8 +285,8 @@ button {
   position: relative;
   background: linear-gradient(160deg, var(--surface-2), var(--glass-bg-2) 45%, var(--surface));
   background-clip: padding-box;
-  backdrop-filter: blur(22px) saturate(220%);
-  -webkit-backdrop-filter: blur(22px) saturate(220%);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow), inset 0 1px 0 var(--line), inset 0 -50px 70px -60px color-mix(in srgb, var(--lime) 22%, transparent);
   border-radius: var(--radius);
@@ -348,6 +347,7 @@ button {
   z-index: -1;
   overflow: hidden;
   will-change: transform;
+  background: linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
 }
 
 .orb-layer,
@@ -361,7 +361,6 @@ button {
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
   will-change: transform;
 }
 
@@ -370,7 +369,7 @@ button {
   height: 60vmin;
   top: -12%;
   left: -10%;
-  background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--cyan) 85%, transparent), transparent 65%);
+  background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--cyan) 85%, transparent) 0%, color-mix(in srgb, var(--cyan) 42%, transparent) 34%, transparent 70%);
   opacity: 0.5;
   animation: float1 26s ease-in-out infinite;
 }
@@ -380,7 +379,7 @@ button {
   height: 52vmin;
   top: 18%;
   right: -14%;
-  background: radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--magenta) 80%, transparent), transparent 65%);
+  background: radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--magenta) 80%, transparent) 0%, color-mix(in srgb, var(--magenta) 38%, transparent) 34%, transparent 70%);
   opacity: 0.45;
   animation: float2 32s ease-in-out infinite;
 }
@@ -390,7 +389,7 @@ button {
   height: 56vmin;
   bottom: -16%;
   left: 18%;
-  background: radial-gradient(circle at 45% 45%, color-mix(in srgb, var(--blue) 75%, transparent), transparent 65%);
+  background: radial-gradient(circle at 45% 45%, color-mix(in srgb, var(--blue) 75%, transparent) 0%, color-mix(in srgb, var(--blue) 36%, transparent) 34%, transparent 70%);
   opacity: 0.4;
   animation: float3 38s ease-in-out infinite;
 }
@@ -400,7 +399,7 @@ button {
   height: 44vmin;
   top: 42%;
   left: 34%;
-  background: radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--violet) 70%, transparent), transparent 65%);
+  background: radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--violet) 70%, transparent) 0%, color-mix(in srgb, var(--violet) 34%, transparent) 34%, transparent 70%);
   opacity: 0.3;
   animation: float1 30s ease-in-out infinite reverse;
 }
@@ -410,7 +409,7 @@ button {
   height: 30vmin;
   bottom: 8%;
   right: 6%;
-  background: radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--lime) 85%, transparent), transparent 65%);
+  background: radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--lime) 85%, transparent) 0%, color-mix(in srgb, var(--lime) 42%, transparent) 34%, transparent 70%);
   opacity: 0.35;
   animation: float2 24s ease-in-out infinite;
 }
@@ -458,6 +457,16 @@ button {
   .p-card { flex: none; width: 100%; }
 }
 
+html.tab-hidden .orb,
+html.tab-hidden .pane,
+html.tab-hidden .code-glyph,
+html.tab-hidden .cert-card,
+html.tab-hidden .portrait-ring,
+html.tab-hidden .pulse-dot,
+html.tab-hidden .caret {
+  animation-play-state: paused !important;
+}
+
 /* ===== Scroll progress ===== */
 
 .scroll-progress {
@@ -480,8 +489,6 @@ button {
   position: absolute;
   border-radius: 30px;
   background: linear-gradient(150deg, var(--glass-bg), var(--glass-bg-2));
-  backdrop-filter: blur(6px) saturate(160%);
-  -webkit-backdrop-filter: blur(6px) saturate(160%);
   border: 1px solid var(--surface-2);
   box-shadow: inset 0 1px 0 var(--line), 0 30px 60px color-mix(in srgb, var(--shadow-base) 28%, transparent);
   will-change: transform;
@@ -641,12 +648,10 @@ button {
   width: 36px;
   height: 36px;
   border: 1.5px solid color-mix(in srgb, var(--magenta) 55%, transparent);
-  transition: width 0.3s var(--ease), height 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
 }
 
 .cursor-ring.is-active {
-  width: 56px;
-  height: 56px;
   border-color: color-mix(in srgb, var(--cyan) 90%, transparent);
   background: color-mix(in srgb, var(--cyan) 8%, transparent);
 }
@@ -1305,6 +1310,8 @@ body.menu-open .mobile-socials {
   padding: clamp(80px, 12vh, 130px) clamp(20px, 6vw, 80px);
   max-width: 1240px;
   margin: 0 auto;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
 }
 
 .sec-head {
