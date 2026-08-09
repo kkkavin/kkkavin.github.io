@@ -93,7 +93,7 @@ test.describe('Content', () => {
   });
 
   test('All section IDs should exist', async ({ page }) => {
-    const sectionIds = ['hero', 'about', 'skills', 'projects', 'journey', 'certifications', 'achievements', 'contact'];
+    const sectionIds = ['hero', 'about', 'skills', 'projects', 'experience', 'journey', 'certifications', 'achievements', 'contact'];
     for (const id of sectionIds) {
       const section = page.locator(`#${id}`);
       await expect(section).toBeAttached();

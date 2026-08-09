@@ -58,9 +58,9 @@ test.describe('Mobile Menu', () => {
 
   test('mobile menu should have all navigation links', async ({ page }) => {
     const links = page.locator('.mobile-links a');
-    await expect(links).toHaveCount(6);
+    await expect(links).toHaveCount(7);
 
-    const expectedTexts = ['About', 'Skills', 'Projects', 'Journey', 'Certifications', 'Contact'];
+    const expectedTexts = ['About', 'Skills', 'Projects', 'Experience', 'Journey', 'Certifications', 'Contact'];
     for (let i = 0; i < expectedTexts.length; i++) {
       await expect(links.nth(i)).toHaveText(expectedTexts[i]);
     }
