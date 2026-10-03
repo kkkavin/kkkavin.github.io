@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Page under construction — play a tiny endless runner while you're here.">
+  <title>Under Construction — K K Kavin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script>
+    (function () {
+      try {
+        var themes = ['dark', 'light', 'sunset'];
+        var stored = localStorage.getItem('theme');
+        var theme = themes.indexOf(stored) !== -1
+          ? stored
+          : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css?v=20260803">
+  <link rel="stylesheet" href="css/game.css?v=20261003">
+</head>
+<body>
+  <a class="skip-link" href="#game">Skip to game</a>
+
+  <header class="nav" id="nav">
+    <a class="nav-logo" href="/" aria-label="Back to home">
+      <span class="nav-logo-badge">KK</span>
+      <span class="nav-logo-text">K K Kavin</span>
+    </a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch theme" aria-pressed="false">
+      <span class="theme-icon icon-moon">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </span>
+      <span class="theme-icon icon-sun">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </span>
+      <span class="theme-icon icon-spark">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c.5 4.5 2.5 6.5 7 7-4.5.5-6.5 2.5-7 7-.5-4.5-2.5-6.5-7-7 4.5-.5 6.5-2.5 7-7z"/><path d="M19 15c.2 2 1.2 3 3 3.2-1.8.2-2.8 1.2-3 3.2-.2-2-1.2-3-3-3.2 1.8-.2 2.8-1.2 3-3.2z"/></svg>
+      </span>
+    </button>
+  </header>
+
+  <main class="game-wrap">
+    <p class="eyebrow">404 · This page is still being built</p>
+
+    <h1 class="block-wall" aria-label="Under construction">
+      <span class="block-row" aria-hidden="true">
+        <span class="block b1">U</span><span class="block b2">N</span><span class="block b3">D</span><span class="block b4">E</span><span class="block b5">R</span>
+      </span>
+      <span class="block-row" aria-hidden="true">
+        <span class="block b6">C</span><span class="block b7">O</span><span class="block b8">N</span><span class="block b1">S</span><span class="block b2">T</span><span class="block b3">R</span><span class="block b4">U</span><span class="block b5">C</span><span class="block b6">T</span><span class="block b7">I</span><span class="block b8">O</span><span class="block b1">N</span>
+      </span>
+    </h1>
+
+    <p class="game-lead">Nothing to see here yet — so help little <strong>KK</strong> jump the bugs and grab stars while you wait.</p>
+
+    <section class="arcade glass" aria-label="KK cube endless runner game">
+      <div class="hud">
+        <p class="hud-score">SCORE <span id="score" aria-live="polite">00000</span></p>
+        <p class="hud-score dim">HI <span id="hi">00000</span></p>
+        <button class="mute-btn" id="muteBtn" aria-pressed="false" aria-label="Mute sound">🔊</button>
+      </div>
+
+      <canvas id="game" role="img" aria-label="Endless runner game. Press space to make the KK cube jump over bugs."></canvas>
+      <p class="fallback-msg">Canvas is required to play. Your browser does not support it, but you can still head back home below.</p>
+
+      <p class="hint" id="hint"><kbd>Space</kbd> / <kbd>↑</kbd> / tap to jump — hold for higher</p>
+
+      <div class="gameover" id="gameOver" hidden>
+        <p class="gameover-title">Ouch! Bugs got you.</p>
+        <p class="gameover-score">Scored <span id="finalScore">0</span> · Best <span id="finalHi">0</span></p>
+        <button class="btn btn-primary" id="retryBtn" type="button">Run again ↻</button>
+      </div>
+    </section>
+
+    <div class="game-actions">
+      <a class="btn btn-primary" href="https://linkedin.com/in/kkkavin" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn-ghost" href="https://github.com/kkkavin" target="_blank" rel="noopener">Visit GitHub</a>
+    </div>
+
+    <p class="game-note">A tiny easter-egg runner in the spirit of Chrome's dino, GitHub's jumpers, and VS Code's aquarium. High score lives in your browser only.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <a class="footer-logo" href="/">K K Kavin</a>
+      <p>© 2026 K K Kavin — Built with HTML, CSS &amp; JavaScript.</p>
+    </div>
+  </footer>
+
+  <script src="js/game.js?v=20261003"></script>
+</body>
+</html>
