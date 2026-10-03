@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Contact Form', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/#contact');
+    await page.goto('/portfolio.html#contact');
     await page.waitForTimeout(500);
   });
 

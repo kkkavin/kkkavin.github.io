@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Typing Effect', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/portfolio.html');
   });
 
   test('typing element should exist', async ({ page }) => {

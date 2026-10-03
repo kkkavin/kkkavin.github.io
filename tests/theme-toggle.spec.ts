@@ -4,7 +4,7 @@ test.describe('Theme Toggle', () => {
   test.use({ colorScheme: 'dark' });
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/portfolio.html');
     await page.evaluate(() => localStorage.clear());
     await page.reload();
   });

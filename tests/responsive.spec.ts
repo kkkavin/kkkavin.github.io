@@ -5,7 +5,7 @@ test.describe('Responsive Design', () => {
     test.use({ viewport: { width: 1200, height: 800 } });
 
     test.beforeEach(async ({ page }) => {
-      await page.goto('/');
+      await page.goto('/portfolio.html');
     });
 
     test('navigation links should be visible', async ({ page }) => {
@@ -33,7 +33,7 @@ test.describe('Responsive Design', () => {
     test.use({ viewport: { width: 768, height: 1024 } });
 
     test.beforeEach(async ({ page }) => {
-      await page.goto('/');
+      await page.goto('/portfolio.html');
     });
 
     test('site should be usable', async ({ page }) => {
@@ -60,7 +60,7 @@ test.describe('Responsive Design', () => {
     test.use({ viewport: { width: 375, height: 812 } });
 
     test.beforeEach(async ({ page }) => {
-      await page.goto('/');
+      await page.goto('/portfolio.html');
     });
 
     test('mobile toggle should be visible', async ({ page }) => {
@@ -104,7 +104,7 @@ test.describe('Responsive Design', () => {
     test.use({ viewport: { width: 320, height: 568 } });
 
     test.beforeEach(async ({ page }) => {
-      await page.goto('/');
+      await page.goto('/portfolio.html');
     });
 
     test('site should not overflow horizontally', async ({ page }) => {

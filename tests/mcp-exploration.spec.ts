@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Playwright MCP Exploration', () => {
   test('capture screenshots of all themes', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/portfolio.html');
 
     // Dark theme (default with dark colorScheme)
     await page.emulateMedia({ colorScheme: 'dark' });
@@ -39,7 +39,7 @@ test.describe('Playwright MCP Exploration', () => {
       messages.push(`[pageerror] ${error.message}`);
     });
 
-    await page.goto('/');
+    await page.goto('/portfolio.html');
     await page.waitForTimeout(3000);
 
     // Scroll through the page
@@ -61,7 +61,7 @@ test.describe('Playwright MCP Exploration', () => {
       }
     });
 
-    await page.goto('/');
+    await page.goto('/portfolio.html');
     await page.waitForTimeout(2000);
 
     console.log('Broken external links:', brokenLinks.length);
@@ -71,7 +71,7 @@ test.describe('Playwright MCP Exploration', () => {
   });
 
   test('inspect accessibility tree structure', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/portfolio.html');
 
     // Check for missing landmarks
     const landmarks = await page.evaluate(() => {
@@ -118,7 +118,7 @@ test.describe('Playwright MCP Exploration', () => {
   });
 
   test('check for performance issues', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/portfolio.html');
 
     const metrics = await page.evaluate(() => {
       const perf = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
@@ -136,7 +136,7 @@ test.describe('Playwright MCP Exploration', () => {
   });
 
   test('check form validation behavior', async ({ page }) => {
-    await page.goto('/#contact');
+    await page.goto('/portfolio.html#contact');
     await page.waitForTimeout(500);
 
     // Try submitting empty form

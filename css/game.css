@@ -260,6 +260,54 @@
   color: var(--cream);
 }
 
+/* Magnetic + hover color effects for the action buttons */
+.game-actions .btn {
+  transition:
+    transform 0.18s var(--ease),
+    box-shadow 0.25s var(--ease),
+    background-color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    color 0.25s var(--ease),
+    filter 0.25s var(--ease);
+  will-change: transform;
+}
+
+.game-actions .btn-primary:hover {
+  filter: brightness(1.12) saturate(1.1);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--violet) 45%, transparent);
+}
+
+.game-actions .btn-ghost:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: color-mix(in srgb, var(--cyan) 10%, transparent);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--cyan) 25%, transparent);
+}
+
+.game-actions .btn:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+/* File-not-found subheading + no-JS fallback */
+.notfound-sub {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  color: var(--cream);
+  margin: -4px 0 10px;
+}
+
+.noscript-msg {
+  max-width: 560px;
+  margin: 18px auto 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.noscript-msg a {
+  color: var(--cyan);
+}
+
 @media (max-width: 640px) {
   .block {
     min-width: 34px;

@@ -1,41 +1,26 @@
 (function () {
   'use strict';
 
-  var htmlEl = document.documentElement;
+  // Note: theme toggle lives in js/game-widget.js (single source of truth).
 
-  /* ===== Theme toggle (same 3-state order as index) ===== */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  var themeToggle = document.getElementById('themeToggle');
-  var themeOrder = ['dark', 'light', 'sunset'];
-  var themeAria = {
-    dark: 'Switch to light theme',
-    light: 'Switch to sunset theme',
-    sunset: 'Switch to dark theme'
-  };
+  /* ===== Magnetic action buttons (same pattern as portfolio) ===== */
 
-  function currentTheme() {
-    return htmlEl.getAttribute('data-theme') || 'dark';
-  }
+  if (finePointer && !reduceMotion) {
+    document.querySelectorAll('.game-actions .btn.magnetic').forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        var rect = el.getBoundingClientRect();
+        var x = e.clientX - rect.left - rect.width / 2;
+        var y = e.clientY - rect.top - rect.height / 2;
+        el.style.transform = 'translate(' + (x * 0.25) + 'px, ' + (y * 0.25) + 'px)';
+      });
 
-  function saveTheme(theme) {
-    try {
-      localStorage.setItem('theme', theme);
-    } catch (e) { /* storage unavailable */ }
-  }
-
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function () {
-      var cur = themeOrder.indexOf(currentTheme());
-      var next = themeOrder[(cur + 1) % themeOrder.length];
-      htmlEl.setAttribute('data-theme', next);
-      themeToggle.setAttribute('aria-label', themeAria[next]);
-      themeToggle.setAttribute('aria-pressed', String(next === 'dark'));
-      saveTheme(next);
+      el.addEventListener('mouseleave', function () {
+        el.style.transform = '';
+      });
     });
-
-    var initial = currentTheme();
-    themeToggle.setAttribute('aria-label', themeAria[initial] || themeAria.dark);
-    themeToggle.setAttribute('aria-pressed', String(initial === 'dark'));
   }
 
   /* ===== KK Cube Run — one-button endless runner ===== */
@@ -52,8 +37,6 @@
   var finalHiEl = document.getElementById('finalHi');
   var retryBtn = document.getElementById('retryBtn');
   var muteBtn = document.getElementById('muteBtn');
-
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var HI_KEY = 'kk-cube-hi';
   var MUTE_KEY = 'kk-cube-muted';

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Scroll Effects', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/portfolio.html');
   });
 
   test('scroll progress bar should exist', async ({ page }) => {

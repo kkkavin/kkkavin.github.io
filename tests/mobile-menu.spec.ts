@@ -4,7 +4,7 @@ test.use({ viewport: { width: 375, height: 812 } });
 
 test.describe('Mobile Menu', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/portfolio.html');
   });
 
   test('mobile menu should be hidden by default', async ({ page }) => {

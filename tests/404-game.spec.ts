@@ -1,17 +1,19 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('404 Under Construction + KK Cube Run', () => {
+test.describe('404 File Not Found + KK Cube Run', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/404.html');
   });
 
-  test('should show UNDER CONSTRUCTION block letters', async ({ page }) => {
+  test('should show a classic file-not-found error', async ({ page }) => {
     const wall = page.locator('.block-wall');
     await expect(wall).toBeVisible();
-    await expect(wall).toHaveAttribute('aria-label', 'Under construction');
+    await expect(wall).toHaveAttribute('aria-label', '404: page not found');
     const blocks = page.locator('.block');
-    await expect(blocks).toHaveCount(17); // 5 + 12 letters
-    await expect(blocks.first()).toHaveText('U');
+    await expect(blocks).toHaveCount(3); // "404"
+    await expect(blocks.first()).toHaveText('4');
+    await expect(page.locator('.notfound-sub')).toContainText("doesn't exist");
+    await expect(page.locator('.eyebrow')).toContainText('File not found');
   });
 
   test('should show game canvas, score HUD, and hint', async ({ page }) => {
@@ -124,16 +126,22 @@ test.describe('404 Under Construction + KK Cube Run', () => {
     expect(after).not.toBe(before);
   });
 
-  test('visiting / should redirect to the under-construction game', async ({ page }) => {
-    await page.goto('/');
-    await expect(page).toHaveURL(/404\.html/);
-    await expect(page.locator('.block-wall')).toBeVisible();
-  });
-
-  test('actions row should link LinkedIn, not home', async ({ page }) => {
-    const linkedin = page.locator('.game-actions a[href*="linkedin.com/in/kkkavin"]');
+  test('actions row should match the landing page links', async ({ page }) => {
+    const actions = page.locator('.game-actions');
+    const portfolio = actions.locator('a[href="portfolio.html"]');
+    await expect(portfolio).toBeVisible();
+    await expect(portfolio).toHaveText('Archived Portfolio');
+    const linkedin = actions.locator('a[href*="linkedin.com/in/kkkavin"]');
     await expect(linkedin).toBeVisible();
     await expect(linkedin).toHaveAttribute('target', '_blank');
-    await expect(page.locator('.game-actions a[href="/"]')).toHaveCount(0);
+    const github = actions.locator('a[href="https://github.com/kkkavin"]');
+    await expect(github).toBeVisible();
+    await expect(github).toHaveText('GitHub');
+    await expect(github).toHaveAttribute('target', '_blank');
+  });
+
+  test('action buttons should be magnetic with hover styles', async ({ page }) => {
+    const buttons = page.locator('.game-actions .btn.magnetic');
+    await expect(buttons).toHaveCount(3);
   });
 });
