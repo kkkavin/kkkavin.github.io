@@ -72,30 +72,75 @@
   renderMute();
   if (hiEl) hiEl.textContent = pad(hi);
 
-  /* ----- Tiny WebAudio blips (no assets, unmuted by default) ----- */
+  /* ----- Tiny WebAudio blips (no assets, unmuted by default) -----
+   * The context is unlocked on the first user gesture (outside gameplay),
+   * and tones are only ever scheduled while it is running — scheduling on
+   * a suspended context queues playback, which caused the delayed sounds.
+   */
 
   var actx = null;
 
-  function ensureAudio() {
-    if (muted) return null;
+  function createAudio() {
+    if (actx || muted) return actx;
     try {
-      if (!actx) {
-        var AC = window.AudioContext || window.webkitAudioContext;
-        if (!AC) return null;
-        actx = new AC();
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      try {
+        actx = new AC({ latencyHint: 'interactive' });
+      } catch (e2) {
+        actx = new AC(); // older webkitAudioContext without options support
       }
-      if (actx.state === 'suspended') actx.resume();
-      return actx;
     } catch (e) {
-      return null;
+      actx = null;
     }
+    return actx;
+  }
+
+  function unlockAudio() {
+    var ac = createAudio();
+    if (!ac) return;
+    try {
+      if (ac.state === 'suspended') ac.resume();
+      // Silent buffer: the iOS unlock trick — forces the context to start.
+      var buf = ac.createBuffer(1, 1, ac.sampleRate || 22050);
+      var src = ac.createBufferSource();
+      src.buffer = buf;
+      src.connect(ac.destination);
+      src.start(0);
+    } catch (e) { /* audio unavailable */ }
+  }
+
+  // Unlock on the very first gesture, before any game sound is needed.
+  // Capture phase + once: cheapest possible hook, runs before game handlers.
+  function unlockOnce() {
+    unlockAudio();
+    document.removeEventListener('pointerdown', unlockOnce, true);
+    document.removeEventListener('keydown', unlockOnce, true);
+  }
+  document.addEventListener('pointerdown', unlockOnce, true);
+  document.addEventListener('keydown', unlockOnce, true);
+
+  function audioReady() {
+    return !!(actx && actx.state === 'running');
+  }
+
+  // Diagnostic readout: reveals the device's real output latency,
+  // which distinguishes page-side delay from Bluetooth/OS-side delay.
+  function audioLatency() {
+    if (!actx) return { state: 'none', baseLatency: -1, outputLatency: -1, sampleRate: -1 };
+    var base = -1;
+    var out = -1;
+    try {
+      if (typeof actx.baseLatency === 'number') base = actx.baseLatency;
+      if (typeof actx.outputLatency === 'number') out = actx.outputLatency;
+    } catch (e) { /* properties unavailable */ }
+    return { state: actx.state, baseLatency: base, outputLatency: out, sampleRate: actx.sampleRate || -1 };
   }
 
   function tone(f0, f1, dur, type, vol) {
-    if (muted) return;
-    var ac = ensureAudio();
-    if (!ac) return;
+    if (muted || !audioReady()) return;
     try {
+      var ac = actx;
       var osc = ac.createOscillator();
       var gain = ac.createGain();
       var t = ac.currentTime;
@@ -236,7 +281,7 @@
   }
 
   function press() {
-    ensureAudio();
+    unlockAudio();
     if (G.mode === 'idle') {
       start();
       doJump();
@@ -407,6 +452,23 @@
     }
   }
 
+  // Theme colors change rarely — cache them instead of forcing style
+  // recalculation on every frame (matters on low-end phones).
+  var themeCache = null;
+  var themeCacheAge = 9999;
+
+  function themeColors() {
+    if (!themeCache || themeCacheAge > 240) {
+      themeCache = {
+        line: cssVar('--line-strong', 'rgba(255,255,255,0.25)'),
+        faint: cssVar('--faint', '#7c88ad')
+      };
+      themeCacheAge = 0;
+    }
+    themeCacheAge += 1;
+    return themeCache;
+  }
+
   function draw() {
     ctx.clearRect(0, 0, W, H);
 
@@ -421,14 +483,15 @@
     }
     ctx.globalAlpha = 1;
 
-    ctx.strokeStyle = cssVar('--line-strong', 'rgba(255,255,255,0.25)');
+    var tc = themeColors();
+    ctx.strokeStyle = tc.line;
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, groundY + 0.5);
     ctx.lineTo(W, groundY + 0.5);
     ctx.stroke();
 
-    ctx.fillStyle = cssVar('--faint', '#7c88ad');
+    ctx.fillStyle = tc.faint;
     ctx.font = '12px ui-monospace, Consolas, monospace';
     ctx.globalAlpha = 0.5;
     var glyphs = ['<', '>', '{', '}', ';', '/>'];
@@ -612,7 +675,7 @@
   if (muteBtn) {
     muteBtn.addEventListener('click', function (e) {
       e.stopPropagation();
-      ensureAudio();
+      unlockAudio();
       setMuted(!muted);
     });
   }
@@ -651,6 +714,8 @@
     press: press,
     cutJump: cutJump,
     setMuted: setMuted,
+    audioReady: audioReady,
+    audioLatency: audioLatency,
     getScore: function () {
       return Math.floor(G.score);
     },

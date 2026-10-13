@@ -147,8 +147,19 @@
   border-color: var(--glass-border-hover);
 }
 
+/* Kill the mobile tap highlight (translucent blue flash) on game controls */
+#game,
+.mute-btn,
+.game-actions .btn,
+.game-wrap {
+  -webkit-tap-highlight-color: transparent;
+}
+
 #game {
   display: block;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   width: 100%;
   height: 300px;
   border-radius: 16px;

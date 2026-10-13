@@ -112,6 +112,27 @@ test.describe('404 File Not Found + KK Cube Run', () => {
     expect(errors).toEqual([]);
   });
 
+  test('audio should unlock on first gesture and survive rapid jumps', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    await page.keyboard.press('Space');
+    await expect.poll(async () =>
+      page.evaluate(() => (window as any).__cubeGame?.audioReady()),
+    ).toBe(true);
+    // Mash jump: each blip must schedule instantly without throwing.
+    for (let i = 0; i < 5; i += 1) {
+      await page.keyboard.press('Space');
+      await page.waitForTimeout(120);
+    }
+    expect(errors).toEqual([]);
+    await expect.poll(async () =>
+      page.evaluate(() => (window as any).__cubeGame?.audioReady()),
+    ).toBe(true);
+    const latency = await page.evaluate(() => (window as any).__cubeGame.audioLatency());
+    expect(latency.state).toBe('running');
+    expect(latency.sampleRate).toBeGreaterThan(0);
+  });
+
   test('canvas should be accessible with label and skip link', async ({ page }) => {
     await expect(page.locator('#game')).toHaveAttribute('role', 'img');
     await expect(page.locator('.skip-link')).toHaveAttribute('href', '#game');

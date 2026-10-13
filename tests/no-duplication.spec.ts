@@ -23,6 +23,19 @@ test.describe('No content duplication across pages', () => {
     }
   });
 
+  // Content change ⇒ stamp bump: pins the current asset versions so a
+  // stale phone cache can never silently run pre-fix game code again.
+  test('game assets should carry the current version stamp', async ({ request }) => {
+    for (const path of ['/', '/404.html']) {
+      const res = await request.get(path);
+      expect(res.ok()).toBeTruthy();
+      const html = await res.text();
+      for (const asset of ['js/game.js?v=20261013', 'js/game-widget.js?v=20261013', 'css/game.css?v=20261013']) {
+        expect(html, `${path} must reference ${asset}`).toContain(asset);
+      }
+    }
+  });
+
   test('404 page should contain no refinement or portfolio markup', async ({ request }) => {
     const res = await request.get('/404.html');
     expect(res.ok()).toBeTruthy();
