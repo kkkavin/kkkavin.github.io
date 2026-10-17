@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Serve site (404-aware)",
+      "type": "npm",
+      "script": "serve",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "detail": "GitHub-Pages-like static server: unknown paths render 404.html (http://localhost:4000)"
+    }
+  ]
+}

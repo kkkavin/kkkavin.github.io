@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Content', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/portfolio.html');
+    await page.goto('/');
   });
 
   test('page should have correct title', async ({ page }) => {
@@ -60,15 +60,15 @@ test.describe('Content', () => {
     await expect(statLabels.nth(2)).toHaveText('Day streak');
   });
 
-  test('Skills section should have 3 skill cards', async ({ page }) => {
+  test('Skills section should have 5 skill cards', async ({ page }) => {
     const cards = page.locator('.skill-card');
-    await expect(cards).toHaveCount(3);
+    await expect(cards).toHaveCount(5);
   });
 
-  test('Skills section should have skill bars', async ({ page }) => {
-    const bars = page.locator('.bar-fill');
-    const count = await bars.count();
-    expect(count).toBeGreaterThanOrEqual(6);
+  test('Skills section should list skill chips', async ({ page }) => {
+    const chips = page.locator('.skill-chips li');
+    const count = await chips.count();
+    expect(count).toBeGreaterThanOrEqual(15);
   });
 
   test('Journey section should have timeline items', async ({ page }) => {
@@ -79,7 +79,7 @@ test.describe('Content', () => {
   test('Certifications section should have cert cards', async ({ page }) => {
     const cards = page.locator('.cert-card');
     const count = await cards.count();
-    expect(count).toBeGreaterThanOrEqual(8);
+    expect(count).toBeGreaterThanOrEqual(11);
   });
 
   test('Achievements section should have achievement items', async ({ page }) => {
@@ -101,8 +101,8 @@ test.describe('Content', () => {
   });
 
   test('email links should be correct', async ({ page }) => {
-    const emailLinks = page.locator('a[href="mailto:kavinkathiravan6787@gmail.com"]');
+    const emailLinks = page.locator('a[href="https://mail.google.com/mail/?view=cm&fs=1&to=kavinkathiravan6787@gmail.com"]');
     const count = await emailLinks.count();
-    expect(count).toBeGreaterThanOrEqual(1);
+    expect(count).toBeGreaterThanOrEqual(2);
   });
 });

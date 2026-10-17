@@ -15,7 +15,7 @@
 - **Severity:** High
 - **Description:** The contact form only shows a success message and resets the form. No data is actually sent to a server. Users who submit the form believe their message was sent, but it was not.
 - **Impact:** Users cannot actually contact the portfolio owner through the form.
-- **Recommendation:** Integrate with a form service (Formspree, Netlify Forms, EmailJS) or add a `mailto:` fallback.
+- **Recommendation:** Integrate with a form service (Formspree, Netlify Forms, EmailJS) or a `mailto:` fallback. (Implemented: the form now opens a prefilled Gmail compose window.)
 
 ### 2. Mobile Menu Overlay Blocks Hamburger Button
 - **File:** `index.html:104-121`, `css/style.css`

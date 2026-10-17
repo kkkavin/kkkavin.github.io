@@ -2,7 +2,16 @@ import { test, expect } from '@playwright/test';
 
 test.describe('404 File Not Found + KK Cube Run', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/404.html');
+    await page.goto('/this-page-does-not-exist');
+  });
+
+  test('unknown route should return HTTP 404 and serve the File-not-found page', async ({ request }) => {
+    const res = await request.get('/this-page-does-not-exist');
+    expect(res.status()).toBe(404);
+    const html = await res.text();
+    expect(html).toContain('File not found');
+    expect(html).toContain('game-widget.js');
+    expect(html).toContain('data-widget="arcade"');
   });
 
   test('should show a classic file-not-found error', async ({ page }) => {
@@ -13,7 +22,7 @@ test.describe('404 File Not Found + KK Cube Run', () => {
     await expect(blocks).toHaveCount(3); // "404"
     await expect(blocks.first()).toHaveText('4');
     await expect(page.locator('.notfound-sub')).toContainText("doesn't exist");
-    await expect(page.locator('.eyebrow')).toContainText('File not found');
+    await expect(page.locator('#modeNotFound .eyebrow')).toContainText('File not found');
   });
 
   test('should show game canvas, score HUD, and hint', async ({ page }) => {
@@ -149,9 +158,9 @@ test.describe('404 File Not Found + KK Cube Run', () => {
 
   test('actions row should match the landing page links', async ({ page }) => {
     const actions = page.locator('.game-actions');
-    const portfolio = actions.locator('a[href="portfolio.html"]');
+    const portfolio = actions.locator('a[href="/"]');
     await expect(portfolio).toBeVisible();
-    await expect(portfolio).toHaveText('Archived Portfolio');
+    await expect(portfolio).toHaveText('Portfolio');
     const linkedin = actions.locator('a[href*="linkedin.com/in/kkkavin"]');
     await expect(linkedin).toBeVisible();
     await expect(linkedin).toHaveAttribute('target', '_blank');

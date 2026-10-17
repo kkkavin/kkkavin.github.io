@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Navigation', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/portfolio.html');
+    await page.goto('/');
   });
 
   test('should have a visible navigation bar', async ({ page }) => {
@@ -10,10 +10,10 @@ test.describe('Navigation', () => {
     await expect(nav).toBeVisible();
   });
 
-  test('should display logo linking to hero', async ({ page }) => {
+  test('should display logo linking to the game', async ({ page }) => {
     const logo = page.locator('.nav-logo');
     await expect(logo).toBeVisible();
-    await expect(logo).toHaveAttribute('href', '#hero');
+    await expect(logo).toHaveAttribute('href', '404.html');
   });
 
   test('should have all navigation links', async ({ page }) => {

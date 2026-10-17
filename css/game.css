@@ -308,6 +308,27 @@
   margin: -4px 0 10px;
 }
 
+.landing-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+/* Dual-mode game page: default to the 404 face, swap to the landing face
+   when js/game-mode sets html[data-game-mode="landing"] (see 404.html). */
+#modeLanding {
+  display: none;
+}
+
+html[data-game-mode="landing"] #modeLanding {
+  display: block;
+}
+
+html[data-game-mode="landing"] #modeNotFound {
+  display: none;
+}
+
 .noscript-msg {
   max-width: 560px;
   margin: 18px auto 0;

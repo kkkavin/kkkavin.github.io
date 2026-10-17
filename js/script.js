@@ -42,7 +42,7 @@
   /* ===== Typing effect ===== */
 
   var typedEl = document.getElementById('typed');
-  var roles = ['Software Engineer', 'Full-Stack Developer', 'XR / AR / VR Developer', 'Game Developer'];
+  var roles = ['Software Engineer', 'Python Developer', 'XR / AR / VR Developer', 'AI Engineer'];
   var roleIndex = 0;
   var charIndex = 0;
   var deleting = false;
@@ -85,6 +85,7 @@
   var track = document.querySelector('.projects-track');
   var trackDistance = 0;
   var countNow = document.querySelector('.count-now');
+  var projectCount = track ? track.querySelectorAll('.p-card').length : 0;
 
   var orbLayer = document.querySelector('.orb-layer');
   var glyphLayer = document.querySelector('.code-glyphs');
@@ -390,8 +391,8 @@
     var rect = pinSection.getBoundingClientRect();
     var p = clamp(-rect.top / trackDistance, 0, 1);
     track.style.transform = 'translate3d(' + (-p * trackDistance) + 'px, 0, 0)';
-    if (countNow) {
-      var idx = clamp(Math.ceil(p * 5), 1, 5);
+    if (countNow && projectCount > 1) {
+      var idx = clamp(Math.ceil(p * (projectCount - 1)) + 1, 1, projectCount);
       countNow.textContent = String(idx).padStart(2, '0');
     }
   }
@@ -560,26 +561,6 @@
   }
 
   initSplit();
-
-  /* ===== Skill bars ===== */
-
-  var barObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var fill = entry.target;
-        fill.style.width = fill.getAttribute('data-level') + '%';
-        barObserver.unobserve(fill);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.bar-fill').forEach(function (bar) {
-    if (reduceMotion) {
-      bar.style.width = bar.getAttribute('data-level') + '%';
-    } else {
-      barObserver.observe(bar);
-    }
-  });
 
   /* ===== Stat counters ===== */
 
@@ -820,10 +801,11 @@
     });
   }
 
-  /* ===== Contact form ===== */
+  /* ===== Contact form — opens Gmail compose ===== */
 
   var form = document.getElementById('contactForm');
   var success = document.getElementById('formSuccess');
+  var CONTACT_EMAIL = 'kavinkathiravan6787@gmail.com';
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -836,15 +818,12 @@
     var message = form.elements['message'].value.trim();
     var subject = 'Portfolio contact from ' + name;
     var body = 'Hi Kavin,\n\nName: ' + name + '\nEmail: ' + email + '\n\n' + message;
-    var mailtoUrl = 'mailto:kavinkathiravan6787@gmail.com?subject=' +
-      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    var mailLink = document.createElement('a');
-    mailLink.href = mailtoUrl;
-    mailLink.rel = 'noopener';
-    mailLink.style.display = 'none';
-    document.body.appendChild(mailLink);
-    if (!navigator.webdriver) mailLink.click();
-    mailLink.remove();
+    var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1' +
+      '&to=' + encodeURIComponent(CONTACT_EMAIL) +
+      '&su=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+    window.__lastComposeUrl = gmailUrl;
+    if (!navigator.webdriver) window.open(gmailUrl, '_blank', 'noopener');
     success.classList.add('show');
     form.reset();
     setTimeout(function () {

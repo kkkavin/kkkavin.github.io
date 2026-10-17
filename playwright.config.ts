@@ -30,7 +30,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'python -m http.server 4000',
+    command: 'node scripts/serve.js',
     url: 'http://localhost:4000',
     reuseExistingServer: !process.env.CI,
     timeout: 15000,

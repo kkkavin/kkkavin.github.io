@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Contact Form', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/portfolio.html#contact');
+    await page.goto('/#contact');
     await page.waitForTimeout(500);
   });
 
@@ -55,6 +55,22 @@ test.describe('Contact Form', () => {
     const success = page.locator('#formSuccess');
     await expect(success).toHaveClass(/show/);
     await expect(success).toBeVisible();
+    await expect(success).toContainText('Gmail');
+  });
+
+  test('submit should build a prefilled Gmail compose URL', async ({ page }) => {
+    await page.fill('#name', 'Test User');
+    await page.fill('#email', 'test@example.com');
+    await page.fill('#message', 'Hello, this is a test message.');
+
+    await page.click('#contactForm button[type="submit"]');
+
+    const url: string = await page.evaluate(() => (window as any).__lastComposeUrl);
+    expect(url.startsWith('https://mail.google.com/mail/?view=cm&fs=1')).toBeTruthy();
+    expect(url).toContain('to=kavinkathiravan6787%40gmail.com');
+    expect(url).toContain('su=Portfolio%20contact%20from%20Test%20User');
+    expect(url).toContain(encodeURIComponent('Hello, this is a test message.'));
+    expect(url).toContain(encodeURIComponent('test@example.com'));
   });
 
   test('success message should hide after timeout', async ({ page }) => {
@@ -87,7 +103,7 @@ test.describe('Contact Form', () => {
   test('contact info should show email', async ({ page }) => {
     const emailLink = page.locator('.contact-mail');
     await expect(emailLink).toBeVisible();
-    await expect(emailLink).toHaveAttribute('href', 'mailto:kavinkathiravan6787@gmail.com');
+    await expect(emailLink).toHaveAttribute('href', 'https://mail.google.com/mail/?view=cm&fs=1&to=kavinkathiravan6787@gmail.com');
   });
 
   test('contact info should show location', async ({ page }) => {

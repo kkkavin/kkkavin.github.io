@@ -1,4 +1,4 @@
-/* Shared templates for the game pages (index.html, 404.html).
+/* Shared templates for the game page (404.html).
  * Single source of truth for the mini nav, footer, and arcade section —
  * pages contain only their unique content plus <div data-widget="..."> slots.
  * Runs synchronously before js/game.js so the engine finds its nodes.

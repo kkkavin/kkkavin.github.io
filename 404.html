@@ -23,40 +23,69 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=20260803">
-  <link rel="stylesheet" href="css/game.css?v=20261013">
+  <script>
+    /* Single game page, two faces: a real missing URL gets the 404 face,
+       while a direct visit to /404.html (or ?mode=landing) gets the game landing.
+       Runs in <head> so css/game.css can pick the right face with no flash. */
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var mode = params.get('mode');
+      var file = window.location.pathname.replace(/\/+$/, '').split('/').pop();
+      var showLanding = mode === 'landing' || (mode !== '404' && file === '404.html');
+      document.documentElement.setAttribute('data-game-mode', showLanding ? 'landing' : '404');
+      if (showLanding) {
+        document.title = 'KK Cube Run — K K Kavin';
+        var desc = document.querySelector('meta[name="description"]');
+        if (desc) desc.setAttribute('content', 'KK Cube Run — a tiny endless runner by K K Kavin.');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css?v=20261017">
+  <link rel="stylesheet" href="css/game.css?v=20261017">
 </head>
 <body>
-  <div data-widget="nav" data-logo-href="/" data-logo-label="Back to the refinement page"></div>
+  <div data-widget="nav" data-logo-href="/" data-logo-label="Open the portfolio"></div>
 
   <main class="game-wrap">
-    <p class="eyebrow">404 · File not found</p>
+    <div id="modeNotFound">
+      <p class="eyebrow">404 · File not found</p>
 
-    <h1 class="block-wall" aria-label="404: page not found">
-      <span class="block-row" aria-hidden="true">
-        <span class="block b6">4</span><span class="block b1">0</span><span class="block b4">4</span>
-      </span>
-    </h1>
-    <p class="notfound-sub">File not found — this page doesn't exist (yet).</p>
+      <h1 class="block-wall" aria-label="404: page not found">
+        <span class="block-row" aria-hidden="true">
+          <span class="block b6">4</span><span class="block b1">0</span><span class="block b4">4</span>
+        </span>
+      </h1>
+      <p class="notfound-sub">File not found — this page doesn't exist (yet).</p>
 
-    <p class="game-lead">Meanwhile, help little <strong>KK</strong> jump the bugs and grab stars.</p>
+      <p class="game-lead">Meanwhile, help little <strong>KK</strong> jump the bugs and grab stars.</p>
+    </div>
+
+    <div id="modeLanding">
+      <p class="eyebrow">A tiny easter-egg runner</p>
+
+      <h1 class="landing-title" aria-label="KK Cube Run"><span class="gradient-text">KK Cube Run</span></h1>
+
+      <p class="game-lead">Help little <strong>KK</strong> jump the bugs, grab stars, and beat your best — hold for a higher jump.</p>
+    </div>
 
     <div data-widget="arcade"></div>
 
     <div class="game-actions">
-      <a class="btn btn-primary magnetic" href="portfolio.html">Archived Portfolio</a>
+      <a class="btn btn-primary magnetic" href="/">Portfolio</a>
       <a class="btn btn-ghost magnetic" href="https://linkedin.com/in/kkkavin" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn btn-ghost magnetic" href="https://github.com/kkkavin" target="_blank" rel="noopener">GitHub</a>
     </div>
+
+    <p class="game-note">A tiny easter-egg runner in the spirit of Chrome's dino, GitHub's jumpers, and VS Code's aquarium. High score lives in your browser only.</p>
   </main>
 
   <div data-widget="footer" data-logo-href="/"></div>
 
   <noscript>
-    <p class="noscript-msg">JavaScript is off, so the game can't run — but you can still <a href="portfolio.html">visit the archived portfolio</a>, <a href="https://linkedin.com/in/kkkavin">LinkedIn</a>, or <a href="https://github.com/kkkavin">GitHub</a>.</p>
+    <p class="noscript-msg">JavaScript is off, so the game can't run — but you can still <a href="/">visit the portfolio</a>, <a href="https://linkedin.com/in/kkkavin">LinkedIn</a>, or <a href="https://github.com/kkkavin">GitHub</a>.</p>
   </noscript>
 
-  <script src="js/game-widget.js?v=20261013"></script>
-  <script src="js/game.js?v=20261013"></script>
+  <script src="js/game-widget.js?v=20261017"></script>
+  <script src="js/game.js?v=20261017"></script>
 </body>
 </html>
