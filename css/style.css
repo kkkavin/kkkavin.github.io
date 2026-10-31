@@ -446,7 +446,7 @@ button {
   .pin-sticky { position: relative; top: auto; height: auto; overflow: visible; display: block; }
   .projects-track { flex-direction: column; align-items: stretch; gap: 28px; padding: 0; }
   .projects-panel.projects-lead { width: 100%; }
-  .p-card { flex: none; width: 100%; }
+  .p-card { flex: none; width: 100%; height: auto; min-height: 480px; }
 }
 
 html.tab-hidden .orb,
@@ -1349,7 +1349,7 @@ body.menu-open .mobile-socials {
 
 .p-card {
   flex: 0 0 clamp(300px, 40vw, 500px);
-  height: clamp(460px, 66vh, 560px);
+  height: clamp(480px, 68vh, 580px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1468,6 +1468,49 @@ body.menu-open .mobile-socials {
   color: var(--magenta);
   background: color-mix(in srgb, var(--magenta) 10%, transparent);
   border: 1px solid color-mix(in srgb, var(--magenta) 22%, transparent);
+}
+
+.p-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 14px;
+}
+
+.p-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 15px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease), color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.p-link-live {
+  color: var(--thumb-ink);
+  background: var(--grad);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--cyan) 35%, transparent);
+}
+
+.p-link-live:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--cyan) 50%, transparent);
+}
+
+.p-link-code {
+  color: var(--cream);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+}
+
+.p-link-code:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--magenta) 60%, transparent);
+  background: color-mix(in srgb, var(--magenta) 10%, transparent);
+  color: var(--magenta);
 }
 
 /* ===== Timeline ===== */
@@ -2087,6 +2130,8 @@ html.js .split .grad-text {
   .p-card {
     flex: none;
     width: 100%;
+    height: auto;
+    min-height: 480px;
   }
 
   .timeline::before,

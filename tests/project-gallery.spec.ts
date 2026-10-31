@@ -10,13 +10,13 @@ test.describe('Project Gallery', () => {
     await expect(section).toBeAttached();
   });
 
-  test('should display 7 project cards', async ({ page }) => {
+  test('should display 6 project cards', async ({ page }) => {
     const cards = page.locator('.p-card');
-    await expect(cards).toHaveCount(7);
+    await expect(cards).toHaveCount(6);
   });
 
   test('project cards should have titles', async ({ page }) => {
-    const titles = ['AI Student Grievance System', 'DocuMind AI', 'WebifyMe', 'FixRide', 'MetaWell', 'AR Treasure Hunt', 'DevPulse'];
+    const titles = ['AI Student Grievance System', 'DocuMind AI', 'WebifyMe', 'FixRide', 'MetaWell', 'AR Treasure Hunt'];
     const cards = page.locator('.p-card h3');
 
     for (let i = 0; i < titles.length; i++) {
@@ -27,7 +27,7 @@ test.describe('Project Gallery', () => {
   test('project cards should have descriptions', async ({ page }) => {
     const descriptions = page.locator('.p-card .p-body p');
     const count = await descriptions.count();
-    expect(count).toBe(7);
+    expect(count).toBe(6);
 
     for (let i = 0; i < count; i++) {
       const text = await descriptions.nth(i).textContent();
@@ -38,7 +38,7 @@ test.describe('Project Gallery', () => {
   test('project cards should have technology tags', async ({ page }) => {
     const tags = page.locator('.p-card .p-tags');
     const count = await tags.count();
-    expect(count).toBe(7);
+    expect(count).toBe(6);
 
     for (let i = 0; i < count; i++) {
       const tagCount = await tags.nth(i).locator('span').count();
@@ -46,13 +46,13 @@ test.describe('Project Gallery', () => {
     }
   });
 
-  test('project thumbnails should link to GitHub', async ({ page }) => {
+  test('project thumbnails should link to project targets', async ({ page }) => {
     const thumbs = page.locator('.p-thumb');
     const count = await thumbs.count();
-    expect(count).toBe(7);
+    expect(count).toBe(6);
 
     for (let i = 0; i < count; i++) {
-      await expect(thumbs.nth(i)).toHaveAttribute('href', /github\.com/);
+      await expect(thumbs.nth(i)).toHaveAttribute('href', /^(https?:\/\/)/);
       await expect(thumbs.nth(i)).toHaveAttribute('target', '_blank');
     }
   });
@@ -60,9 +60,9 @@ test.describe('Project Gallery', () => {
   test('project thumbnails should have glyphs', async ({ page }) => {
     const glyphs = page.locator('.thumb-glyph');
     const count = await glyphs.count();
-    expect(count).toBe(7);
+    expect(count).toBe(6);
 
-    const expectedGlyphs = ['GS', 'DM', 'WM', 'FR', 'MW', 'AR', 'DP'];
+    const expectedGlyphs = ['GS', 'DM', 'WM', 'FR', 'MW', 'AR'];
     for (let i = 0; i < count; i++) {
       await expect(glyphs.nth(i)).toHaveText(expectedGlyphs[i]);
     }
@@ -71,11 +71,19 @@ test.describe('Project Gallery', () => {
   test('project counter should be visible', async ({ page }) => {
     const counter = page.locator('.projects-count');
     await expect(counter).toBeVisible();
-    await expect(counter).toContainText('/ 07');
+    await expect(counter).toContainText('/ 06');
   });
 
   test('projects lead text should be visible', async ({ page }) => {
     const lead = page.locator('.projects-lead-text');
     await expect(lead).toBeVisible();
+  });
+
+  test('student grievance and webifyme should have live demo links', async ({ page }) => {
+    const sgsLink = page.locator('a[href="https://sgs.kkkavin.me"]');
+    await expect(sgsLink.first()).toBeAttached();
+
+    const webifymeLink = page.locator('a[href="https://kkkavin.me/webifyme"]');
+    await expect(webifymeLink.first()).toBeAttached();
   });
 });
